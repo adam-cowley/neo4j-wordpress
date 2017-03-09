@@ -90,25 +90,6 @@ class Recommend {
         return return static::run($cypher, ['post_id' => $post_id, 'session_id' => session_id()]);
     }
 
-    public static function byUser($user_id) {
-
-    }
-
-    /**
-     * Recommend posts for the User of the current Session
-     *
-     * @return WP_Query
-     */
-    public static function bySession($post_id) {
-        $session_id = session_id();
-
-        // Find all posts
-        // Visited by a User of another session
-        // Where the Session was not owned by the User
-        // and the User has not visited in their current session
-        // then compare them
-    }
-
     /**
      * As all of our posts are going to be returning the same information
      * we should use a

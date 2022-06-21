@@ -40,7 +40,7 @@ class Neopress {
 	 * Singleton Class
 	 */
 	public static function init(): self {
-		if ( ! static::$_instance ) {
+		if ( ! isset( static::$_instance ) ) {
 			static::$_instance = new static;
 
 			static::session();
@@ -80,7 +80,7 @@ class Neopress {
 	 * Get Neo4j Client Instance
 	 */
 	public static function client(): \Laudis\Neo4j\Basic\Session {
-		if ( ! static::$_session ) {
+		if ( ! isset( static::$_session ) ) {
 			static::$_session = self::driver()->createSession();
 		}
 
@@ -91,7 +91,7 @@ class Neopress {
 	 * Get Neo4j Client Instance
 	 */
 	public static function driver(): Driver {
-		if ( ! static::$_session ) {
+		if ( ! isset( static::$_driver ) ) {
 			// Create Neo Client
 			$connection_string = sprintf( '://%s:%s@%s:',
 				get_option( 'neopress_username', 'neo4j' ),

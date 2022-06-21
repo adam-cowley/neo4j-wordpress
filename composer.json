@@ -6,16 +6,20 @@
     "laudis/neo4j-php-client": "^2.6",
     "php": "^7.4 || ^8.0"
   },
-  "license": "MIT",
+  "license": "GPL-2.0-or-later",
   "authors": [
     {
       "name": "Adam Cowley",
       "email": "adam@wecommit.co"
+    },
+    {
+      "name": "Ghlen Nagels",
+      "email": "ghlen@pm.me"
     }
   ],
   "autoload": {
     "psr-4": {
-      "Neopress\\": "./"
+      "Neopress\\": "./include"
     }
   },
   "minimum-stability": "dev"

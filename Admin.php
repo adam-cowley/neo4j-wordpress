@@ -3,7 +3,6 @@
 namespace Neopress;
 
 use Exception;
-use GraphAware\Neo4j\Client\Client;
 
 class Admin {
 
@@ -51,7 +50,7 @@ class Admin {
 
             $class = 'updated';
 
-            $message = sprintf('<p><strong>Connection Successful.</strong></p><p>There are <strong>%d</strong> nodes in your database', $result->getRecord()->get('count'));
+            $message = sprintf('<p><strong>Connection Successful.</strong></p><p>There are <strong>%d</strong> nodes in your database', $result->getAsMap(0)->get('count'));
         }
         catch (Exception $e) {
             $message .= '<p>'. $e->getMessage() .'</p>';

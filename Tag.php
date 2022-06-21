@@ -2,7 +2,7 @@
 
 namespace Neopress;
 
-use GraphAware\Neo4j\Client\Transaction\Transaction;
+use Laudis\Neo4j\Basic\UnmanagedTransaction as Transaction;
 use WP_Term;
 
 class Tag {
@@ -19,7 +19,7 @@ class Tag {
             SET t += {tag}
         ');
 
-        $tx->push($cypher, ['term_id' => $tag->term_id, 'tag' => (array) $tag]);
+        $tx->run($cypher, ['term_id' => $tag->term_id, 'tag' => (array) $tag]);
     }
 
 }

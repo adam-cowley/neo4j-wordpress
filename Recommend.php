@@ -87,7 +87,7 @@ class Recommend {
             LIMIT 5
         ';
 
-        return return static::run($cypher, ['post_id' => $post_id, 'session_id' => session_id()]);
+        return static::run($cypher, ['post_id' => $post_id, 'session_id' => session_id()]);
     }
 
     /**

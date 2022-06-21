@@ -61,7 +61,7 @@ class Session {
         $result = Neopress::client()->run($cypher, $params);
 
         // Store Last Pageview in Session
-        $_SESSION['neopress_last_pageview'] = $result->getRecord()->get('id');
+        $_SESSION['neopress_last_pageview'] = $result->getAsMap(0)->get('id');
     }
 
 }

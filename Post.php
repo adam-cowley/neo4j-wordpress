@@ -3,8 +3,7 @@
 namespace Neopress;
 
 use Exception;
-use GraphAware\Neo4j\Client\Transaction\Transaction;
-use WP_Post;
+use Laudis\Neo4j\Basic\UnmanagedTransaction as Transaction;
 
 class Post {
 
@@ -73,7 +72,7 @@ class Post {
             'terms' => $terms
         ];
 
-        $tx->push($cypher, $params);
+        $tx->run($cypher, $params);
     }
 
     /**
@@ -91,7 +90,7 @@ class Post {
             MERGE (u)-[:AUTHORED]->(p)
         ';
 
-        $tx->push($cypher, ['post_id' => $post_id, 'user_id' => $user_id]);
+        $tx->run($cypher, ['post_id' => $post_id, 'user_id' => $user_id]);
     }
 
     /**

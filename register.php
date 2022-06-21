@@ -4,6 +4,7 @@ use Laudis\Neo4j\Basic\Driver;
 use Laudis\Neo4j\Basic\Session;
 use Laudis\Neo4j\Contracts\DriverInterface;
 use Laudis\Neo4j\Contracts\SessionInterface;
+use Neopress\NeoPress;
 use Psr\Container\ContainerInterface;
 use function DI\create;
 
@@ -12,7 +13,7 @@ return [
 		return $c->get( Driver::class )->createSession();
 	},
 
-	Driver::class => static function ( ContainerInterface $c ) {
+	Driver::class => static function () {
 		$connectionString = 'neo4j://';
 		if ( get_option( 'neopress_username' ) && get_option( 'neopress_password' ) ) {
 			$connectionString .= get_option( 'neopress_username' ) . ':' . get_option( 'neopress_password' ) . '@';
@@ -47,5 +48,9 @@ return [
 	},
 
 	SessionInterface::class => create( Session::class ),
-	DriverInterface::class  => create( Driver::class )
+	DriverInterface::class  => create( Driver::class ),
+
+	NeoPress::class => static function ( ContainerInterface $c ) {
+		return new Neopress( $c->get( Session::class ), $c->get( 'userId' ) );
+	}
 ];

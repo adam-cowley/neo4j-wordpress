@@ -37,12 +37,12 @@ require_once 'vendor/autoload.php';
 
 
 if ( is_admin() ) {
-	add_action( 'admin_init', make_callable([ Admin::class, 'init']));
-	add_action( 'admin_menu', make_callable([Admin::class, 'menu']) );
+	add_action( 'admin_init', make_callable( [ Admin::class, 'init' ] ) );
+	add_action( 'admin_menu', make_callable( [ Admin::class, 'menu' ] ), 9);
 
-	add_action( 'save_post', make_callable([ WordpressStore::class, 'merge']) );
+	add_action( 'save_post', make_callable( [ WordpressStore::class, 'merge' ] ));
 } else {
-	add_action( 'shutdown', make_callable([ NeoPress::class, 'shutdown']) );
+	add_action( 'shutdown', make_callable( [ NeoPress::class, 'shutdown' ] ) );
 }
 
 

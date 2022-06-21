@@ -3,8 +3,10 @@
 namespace Neopress;
 
 use Exception;
+use Laudis\Neo4j\Basic\Session;
 use Laudis\Neo4j\Basic\UnmanagedTransaction as Transaction;
 use Laudis\Neo4j\Contracts\TransactionInterface;
+use WP_Post;
 use WP_Term;
 use function get_permalink;
 use function get_post_field;
@@ -12,20 +14,21 @@ use function get_post_status;
 use function get_the_category;
 use function get_the_tags;
 use function get_the_title;
+use function var_dump;
+use function var_export;
 use function wp_is_post_revision;
 
 class WordpressStore {
-	private \Laudis\Neo4j\Basic\Session $session;
+	private Session $session;
 
-	public function __construct( \Laudis\Neo4j\Basic\Session $session ) {
+	public function __construct( Session $session ) {
 		$this->session = $session;
 	}
 
 	/**
 	 * Merge a Post by its Post ID
 	 */
-	public function merge( int $post_id ): void {
-		// Check Post isn't revision
+	public function merge(int $post_id = null, WP_Post $post = null, bool $update = null): void {
 		if ( wp_is_post_revision( $post_id ) ) {
 			return;
 		}

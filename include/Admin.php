@@ -6,6 +6,7 @@ use Closure;
 use Laudis\Neo4j\Basic\Driver;
 use Laudis\Neo4j\Basic\Session;
 use function add_settings_section;
+use function file_get_contents;
 use function register_setting;
 use function strtolower;
 
@@ -72,6 +73,10 @@ class Admin {
 	 * @return void
 	 */
 	public function menu(): void {
+		add_menu_page(  'neopress', __( "Neopress", 'neopress'), 'administrator', 'neopress', function () {
+
+        }, file_get_contents(__DIR__.'/../include/img/neo4j-icon.base64') );
+
 		add_options_page(
 			__( "Neo4j Connection Settings", 'neopress' ),
 			__( "Neopress", 'neopress' ),

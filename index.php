@@ -122,7 +122,7 @@ if ( is_admin() ) {
 	add_action( 'admin_init', Neopress::class . '::init' );
 
 
-	add_action( 'admin_init', [ Admin::class . '::init' ] );
+	add_action( 'admin_init', Admin::class . '::init');
 	add_action( 'admin_menu', Admin::class . '::menu' );
 
 	add_action( 'save_post', Post::class . '::merge' );

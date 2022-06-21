@@ -11,18 +11,16 @@ Text Domain: neopress
 
 namespace Neopress;
 
-use GraphAware\Neo4j\Client\ClientBuilder;
-
 // No Hackers
+use Laudis\Neo4j\Basic\Driver;
+
 defined( 'ABSPATH' ) or die( 'No dice.');
 
 // Include Vendor Files
 require_once 'vendor/autoload.php';
 
 class Neopress {
-
-    /** @var GraphAware\Neo4j\Client\Client */
-    private static $_client;
+    private static \Laudis\Neo4j\Basic\Session $_client;
 
     /** @var Neopress Singleton instance */
     private static $_instance;
@@ -87,10 +85,8 @@ class Neopress {
 
     /**
      * Get Neo4j Client Instance
-     *
-     * @return GraphAware\Neo4j\Client\Client
      */
-    public static function client() {
+    public static function client(): \Laudis\Neo4j\Basic\Session {
         if ( !static::$_client ) {
             // Create Neo Client
             $connection_string = sprintf('://%s:%s@%s:',
@@ -99,10 +95,8 @@ class Neopress {
                 get_option('neopress_host', 'localhost')
             );
 
-            static::$_client = ClientBuilder::create()
-                // ->addConnection('default', 'http'. $connection_string .get_option('neopress_port', 7474))
-                ->addConnection('bolt',    'bolt'. $connection_string .get_option('neopress_bolt_port', 7687))
-                ->build();
+            static::$_client = Driver::create('bolt'. $connection_string .get_option('neopress_bolt_port', 7687))
+                ->createSession();
         }
 
         return static::$_client;

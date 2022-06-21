@@ -3,7 +3,8 @@
     "description": "Neo4j Recommendation Engine for Wordpress",
     "type": "project",
     "require": {
-        "laudis/neo4j-php-client": "^2.6"
+        "laudis/neo4j-php-client": "^2.6",
+        "php": "^7.4 || ^8.0"
     },
     "license": "MIT",
     "authors": [

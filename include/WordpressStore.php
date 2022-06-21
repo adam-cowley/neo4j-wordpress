@@ -4,24 +4,32 @@ namespace Neopress;
 
 use Exception;
 use Laudis\Neo4j\Basic\UnmanagedTransaction as Transaction;
+use Laudis\Neo4j\Contracts\TransactionInterface;
+use WP_Term;
+use function get_permalink;
+use function get_post_field;
+use function get_post_status;
+use function get_the_category;
+use function get_the_tags;
+use function get_the_title;
+use function wp_is_post_revision;
 
-class Post {
+class WordpressStore {
+	private \Laudis\Neo4j\Basic\Session $session;
+
+	public function __construct( \Laudis\Neo4j\Basic\Session $session ) {
+		$this->session = $session;
+	}
 
 	/**
 	 * Merge a Post by its Post ID
-	 *
-	 * @param Int $post_id
-	 *
-	 * @return void
 	 */
-	public static function merge( int $post_id ) {
+	public function merge( int $post_id ): void {
 		// Check Post isn't revision
 		if ( wp_is_post_revision( $post_id ) ) {
 			return;
 		}
-
-		// Create a new Transaction
-		$tx = NeoPress::client()->beginTransaction();
+		$tx = $this->session->beginTransaction();
 
 		try {
 			// Store an array of Term ID's to merge later
@@ -33,7 +41,7 @@ class Post {
 			foreach ( $categories as $category ) {
 				$terms[] = $category->term_id;
 
-				Category::merge( $tx, $category );
+				$this->mergeCategory( $tx, $category );
 			}
 
 			// ...and the same for tags
@@ -41,47 +49,73 @@ class Post {
 				foreach ( $tags as $tag ) {
 					$terms[] = $tag->term_id;
 
-					Tag::merge( $tx, $tag );
+					$this->mergeTag( $tx, $tag );
 				}
 			}
 
 			// Update Post Details
-			static::mergePost( $tx, $post_id );
+			$this->mergePost( $tx, $post_id );
 
 			// Detach
-			static::detachPost( $tx, $post_id );
+			$this->detachPost( $tx, $post_id );
 
 			// Reattach
-			static::relateTaxonomies( $tx, $post_id, $terms );
+			$this->relateTaxonomies( $tx, $post_id, $terms );
 
-			// Merge Author
 			$author = get_post_field( 'post_author', $post_id );
-
-			// Create Author
-			User::merge( $tx, $author );
+			$this->mergeAuthor( $tx, $author );
 
 			// Relate Author to Post
-			static::relateAuthor( $tx, $post_id, $author );
+			$this->relateAuthor( $tx, $post_id, $author );
 
-			// Run it
 			$tx->commit();
 		} catch ( Exception $e ) {
-			// Rollback
 			$tx->rollback();
 
-			// Error Handling
+			throw $e;
 		}
 	}
 
 	/**
-	 * Add a merge query to the transaction to update the post
-	 *
-	 * @param Transaction $tx
-	 * @param int $post_id
-	 *
+	 * Create a Cypher Query for a Category
+	 */
+	private function mergeCategory( TransactionInterface $tx, WP_Term $category ): void {
+		$cypher = <<<'CYPHER'
+        MERGE (t:Taxonomy:Category {term_id: $termId})
+        SET t += $category
+        CYPHER;
+
+		$tx->run( $cypher, [ 'termId' => $category->term_id, 'category' => $category->to_array() ] );
+	}
+
+	/**
+	 * Create a Cypher Query for a Category
 	 * @return void
 	 */
-	private static function mergePost( Transaction $tx, int $post_id ) {
+	public function mergeTag( TransactionInterface $tx, WP_Term $tag ) {
+		$cypher = <<<'CYPHER'
+        MERGE (t:Taxonomy:Tag {term_id: $termId})
+        SET t += $tag
+        CYPHER;
+
+		$tx->run( $cypher, [ 'termId' => $tag->term_id, 'tag' => (array) $tag ] );
+	}
+
+	/**
+	 * Create a Cypher Query for a Category
+	 */
+	public function mergeAuthor( Transaction $tx, int $user_id ): void {
+		$cypher = <<<'CYPHER'
+        MERGE (u:User {user_id: $userId})
+        CYPHER;
+
+		$tx->run( $cypher, [ 'userId' => $user_id ] );
+	}
+
+	/**
+	 * Add a merge query to the transaction to update the post
+	 */
+	private function mergePost( Transaction $tx, int $post_id ): void {
 		$cypher = <<<'CYPHER'
             MERGE (p:Post {ID: $postId})
             ON CREATE SET p.created_at = timestamp()
@@ -106,7 +140,7 @@ class Post {
 	/**
 	 * Detach a Post from its Taxonomies
 	 */
-	private static function detachPost( Transaction $tx, int $post_id ): void {
+	private function detachPost( Transaction $tx, int $post_id ): void {
 		$cypher = 'MATCH (p:Post {ID: $postId})-[r]-() DELETE r';
 		$params = [ 'postId' => $post_id ];
 
@@ -120,7 +154,7 @@ class Post {
 	 * @param int $post_id
 	 * @param array $terms
 	 */
-	private static function relateTaxonomies( Transaction $tx, int $post_id, array $terms ) {
+	private function relateTaxonomies( Transaction $tx, int $post_id, array $terms ) {
 		$cypher = <<<'CYPHER'
             MATCH (p:Post {ID: $postId})
             WITH p
@@ -140,7 +174,7 @@ class Post {
 	/**
 	 * Create a relationship between the Post and the Author
 	 */
-	private static function relateAuthor( Transaction $tx, int $post_id, int $user_id ): void {
+	private function relateAuthor( Transaction $tx, int $post_id, int $user_id ): void {
 		$cypher = <<<'CYPHER'
             MATCH (p:Post {ID: $postId})
             MATCH (u:User {user_id: $userId})
@@ -149,5 +183,4 @@ class Post {
 
 		$tx->run( $cypher, [ 'postId' => $post_id, 'userId' => $user_id ] );
 	}
-
 }

@@ -27,24 +27,18 @@ along with Neopress. If not, see LICENSE.md
 
 namespace Neopress;
 
-// No Hackers
-use Laudis\Neo4j\Basic\Driver;
-
 defined( 'ABSPATH' ) or die( 'No dice.' );
 
 // Include Vendor Files
 require_once 'vendor/autoload.php';
 
 if ( is_admin() ) {
-	add_action( 'admin_init', [NeoPress::class, 'get' ] );
+	add_action( 'admin_init', make_callable([Admin::class, 'init']));
+	add_action( 'admin_menu', make_callable([Admin::class, 'menu']) );
 
-	add_action( 'admin_init', [Admin::class, 'init']);
-	add_action( 'admin_menu', [Admin::class, 'menu'] );
-
-	add_action( 'save_post', [Post::class, 'merge'] );
+	add_action( 'save_post', make_callable([WordpressStore::class, 'merge']) );
 } else {
-	add_action( 'init', [NeoPress::class, 'identifyUser' ] );
-	add_action( 'shutdown', [NeoPress::class, 'shutdown'] );
+	add_action( 'shutdown', make_callable([NeoPress::class, 'shutdown']) );
 }
 
 

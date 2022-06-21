@@ -2,18 +2,23 @@
 
 namespace Neopress;
 
+use Laudis\Neo4j\Basic\Driver;
+use function add_settings_section;
+use function register_setting;
+
 class Admin {
-	/**
-	 * Register Admin Menus and Hooks
-	 */
-	public static function init(): void {
-		static::registerSettings();
+	private Driver $driver;
+	private \Laudis\Neo4j\Basic\Session $session;
+
+	public function __construct( Driver $driver, \Laudis\Neo4j\Basic\Session $session) {
+		$this->driver = $driver;
+		$this->session = $session;
 	}
 
 	/**
-	 * Register Connection Settings
+	 * Register Admin Menus and Hooks
 	 */
-	private static function registerSettings(): void {
+	public function init(): void {
 		register_setting( 'neopress_connection', 'neopress_username' );
 		register_setting( 'neopress_connection', 'neopress_password' );
 		register_setting( 'neopress_connection', 'neopress_host' );
@@ -24,7 +29,7 @@ class Admin {
 		add_settings_section(
 			'neopress_connection',
 			__( 'Connection Settings', 'neopress' ),
-			static::class . '::checkConnectionStatus',
+			[Admin::class, 'checkConnectionStatus'],
 			'neopress'
 		);
 	}
@@ -32,11 +37,12 @@ class Admin {
 	/**
 	 * Check Connection and display statistics
 	 */
-	public static function checkConnectionStatus(): void {
+	public function checkConnectionStatus(): void {
 
-		if ( NeoPress::driver()->verifyConnectivity() ) {
-			$class   = 'updated';
-			$result  = NeoPress::client()->run( 'MATCH (x) RETURN count(x) AS count' );
+		if ( $this->driver->verifyConnectivity() ) {
+			$class  = 'updated';
+			$result = $this->session->run( 'MATCH (x) RETURN count(x) AS count' );
+
 			$message = sprintf( '<p><strong>Connection Successful.</strong></p><p>There are <strong>%d</strong> nodes in your database', $result->getAsMap( 0 )->get( 'count' ) );
 		} else {
 			$class   = 'error';
@@ -52,7 +58,7 @@ class Admin {
 	 *
 	 * @return void
 	 */
-	public static function menu(): void {
+	public function menu(): void {
 		add_options_page(
 			__( "Neo4j Connection Settings", 'neopress' ),
 			__( "Neopress", 'neopress' ),
@@ -85,7 +91,7 @@ class Admin {
 	/**
 	 * Display HTML for Username input
 	 */
-	public static function option_neopress_username(): void {
+	public function option_neopress_username(): void {
 		printf(
 			'<input type="text" id="neopress_username" name="neopress_username" value="%s" />',
 			get_option( 'neopress_username' )
@@ -107,7 +113,7 @@ class Admin {
 	/**
 	 * Display HTML for Host input
 	 */
-	public static function option_neopress_host(): void {
+	public function option_neopress_host(): void {
 		printf(
 			'<input type="text" id="neopress_host" name="neopress_host" value="%s" />',
 			get_option( 'neopress_host' )
@@ -117,7 +123,7 @@ class Admin {
 	/**
 	 * Display HTML for Port Input
 	 */
-	public static function option_neopress_port(): void {
+	public function option_neopress_port(): void {
 		printf(
 			'<input type="number" id="neopress_port" name="neopress_port" value="%s" />',
 			get_option( 'neopress_port', 7474 )
@@ -127,7 +133,7 @@ class Admin {
 	/**
 	 * Display HTML for Bolt Port Input
 	 */
-	public static function option_neopress_bolt_port(): void {
+	public function option_neopress_bolt_port(): void {
 		printf(
 			'<input type="number" id="neopress_bolt_port" name="neopress_bolt_port" value="%s" />',
 			get_option( 'neopress_bolt_port', 7876 )
@@ -137,7 +143,7 @@ class Admin {
 	/**
 	 * Display HTML for Connection Options Page
 	 */
-	public static function menuConnection(): void {
+	public function menuConnection(): void {
 		?>
         <div class="wrap">
             <h1><?php echo __( "Neo4j Connection Settings", 'neopress' ); ?></h1>

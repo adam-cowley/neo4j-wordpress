@@ -2,107 +2,83 @@
 
 namespace Neopress;
 
-use Laudis\Neo4j\Basic\Driver;
+use Laudis\Neo4j\Basic\Session;
 use function array_key_exists;
-use function get_option;
+use function get_current_user_id;
+use function get_the_ID;
 use function is_single;
 use function session_id;
-use function session_start;
-use function time;
-use function uniqid;
 
 class NeoPress {
-	/** @var NeoPress Singleton instance */
-	private static self $_instance;
+	private Session $session;
+	private string $userId;
 
-	private Driver $driver;
-	private string $user;
-	private ?Session $session = null;
-
-	private function __construct( Driver $driver, string $user ) {
-		$this->driver = $driver;
-		$this->user   = $user;
-	}
-
-	private static function initializeDriver(): Driver {
-		$connectionString = 'neo4j://';
-		if ( get_option( 'neopress_username' ) && get_option( 'neopress_password' ) ) {
-			$connectionString .= get_option( 'neopress_username' ) . ':' . get_option( 'neopress_password' ) . '@';
-		}
-		
-		$connectionString .= get_option( 'neopress_host', 'localhost' );
-
-		if ( get_option( 'neopress_bolt_port' ) ) {
-			$connectionString .= get_option( 'neopress_bolt_port' );
-		}
-
-		return Driver::create( $connectionString );
-	}
-
-	/**
-	 * Return User ID
-	 */
-	public function getUser(): string {
-		return $this->user;
-	}
-
-	/**
-	 * Singleton Class
-	 */
-	public static function get(): self {
-		return static::$_instance ??= new self( NeoPress::initializeDriver(), NeoPress::identifyUser() );
-	}
-
-	/**
-	 * Make sure a session has been started, so we have a unique Session ID
-	 */
-	public static function identifyUser(): string {
-		if ( session_id() === '' ) {
-			session_start();
-		}
-
-		return static::identify();
-	}
-
-	/**
-	 * Identify the current User or create a new ID
-	 */
-	private static function identify(): string {
-		if ( array_key_exists( 'neopress', $_COOKIE ) ) {
-			$tbr = $_COOKIE['neopress'];
-		} else {
-			$tbr = uniqid();
-		}
-
-		$expires = time() + 60 * 60 * 24 * 30;
-		$path    = '/';
-
-		setcookie( 'neopress', static::$_user, $expires, $path );
-
-		return $tbr;
-	}
-
-	/**
-	 * Get Neo4j Client Instance
-	 */
-	public function getSession(): \Laudis\Neo4j\Basic\Session {
-		return $this->session ??= $this->driver->createSession();
-	}
-
-	/**
-	 * Get Neo4j Client Instance
-	 */
-	public function getDriver(): Driver {
-		return $this->driver;
+	public function __construct( Session $session, string $userId) {
+		$this->session = $session;
+		$this->userId = $userId;
 	}
 
 	/**
 	 * Register Shutdown Hook
 	 */
-	public static function shutdown(): void {
+	public function shutdown(): void {
 		if ( is_single() ) {
-			Session::log();
+			$this->log();
 		}
 	}
 
+	/**
+	 * Create a Cypher Query for a Category
+	 */
+	private function log(): void {
+		// Merge Page
+		$cypher = 'MERGE (p:Post {ID: $pageId})';
+		$params = [ 'pageId' => get_the_ID() ];
+
+		// Attribute the Pageview to a Session
+		if ( $session_id = session_id() ) {
+			// Set User's WordPress ID if logged in
+			if ( $user_id = get_current_user_id() ) {
+				$cypher .= ' MERGE (u:User {user_id:$userId})';
+				$cypher .= ' SET u.id = $id';
+
+				$params['userId'] = $user_id;
+			} else {
+				$cypher .= ' MERGE (u:User {id: $id})';
+			}
+
+			// Create Session
+			$cypher .= ' MERGE (s:Session {session_id: $sessionId})';
+
+			// Attribute Session to User
+			$cypher .= ' MERGE (u)-[:HAS_SESSION]->(s)';
+
+			// Create new Pageview
+			$cypher .= ' CREATE (s)-[:HAS_PAGEVIEW]->(v:Pageview {created_at:timestamp()})';
+
+			// Relate Pageview to Page
+			$cypher .= ' CREATE (v)-[:VISITED]->(p)';
+
+			$params['id']        = $this->userId;
+			$params['sessionId'] = $session_id;
+		}
+
+		// Create :NEXT relationship from last pageview
+		if ( array_key_exists( 'neopress_last_pageview', $_SESSION ) ) {
+			$cypher .= ' WITH v';
+			$cypher .= ' MATCH (last:Pageview) WHERE id(last) = $lastPageview';
+			$cypher .= ' CREATE (last)-[:NEXT]->(v)';
+
+			$params['lastPageview'] = $_SESSION['neopress_last_pageview'];
+		}
+
+		// Return Pageview ID
+		$cypher .= 'RETURN id(v) as id';
+
+		// Run Query
+		$result = $this->session->run( $cypher, $params );
+
+		// Store Last Pageview in Session
+		$_SESSION['neopress_last_pageview'] = $result->getAsMap( 0 )->get( 'id' );
+	}
 }

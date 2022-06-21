@@ -6,11 +6,16 @@ use WP_Query;
 
 
 class Recommend {
+	private \Laudis\Neo4j\Basic\Session $session;
+
+	public function __construct(\Laudis\Neo4j\Basic\Session $session) {
+		$this->session = $session;
+	}
 
 	/**
 	 * Provide a simple list of recommendations by Taxonomy
 	 */
-	public static function byTaxonomy( int $post_id ): WP_Query {
+	public function byTaxonomy( int $post_id ): WP_Query {
 		$cypher = <<<'CYPHER'
             MATCH (p:Post)-[:HAS_TAXONOMY]->(:Taxonomy)<-[:HAS_TAXONOMY]-(recommended:Post)
             WHERE p.ID = $postId
@@ -20,15 +25,15 @@ class Recommend {
             LIMIT 5
             CYPHER;
 
-		return static::run( $cypher, [ 'postId' => $post_id ] );
+		return $this->run( $cypher, [ 'postId' => $post_id ] );
 	}
 
 	/**
 	 * As all of our posts are going to be returning the same information
 	 * we should use a
 	 */
-	private static function run( string $cypher, array $params ): WP_Query {
-		$results = NeoPress::client()->run( $cypher, $params );
+	private function run( string $cypher, array $params ): WP_Query {
+		$results = $this->session->run( $cypher, $params );
 
 		// Get Post ID's from Query
 		// TODO: A Map function in the SDK could be cool.
@@ -41,7 +46,7 @@ class Recommend {
 	/**
 	 * Provide a weighted list of Recommendations based on Taxonomies and
 	 */
-	public static function byWeighting( int $post_id ): WP_Query {
+	public function byWeighting( int $post_id ): WP_Query {
 		$cypher = <<<'CYPHER'
             MATCH (p:Post)-[:HAS_TAXONOMY|AUTHORED]-(target)-[:HAS_TAXONOMY|AUTHORED]-(recommended:Post)
             WHERE p.ID = $postId
@@ -52,7 +57,7 @@ class Recommend {
             LIMIT 5
         CYPHER;
 
-		return static::run( $cypher, [ 'postId' => $post_id ] );
+		return $this->run( $cypher, [ 'postId' => $post_id ] );
 	}
 
 	/**
@@ -71,7 +76,7 @@ class Recommend {
             LIMIT 5
             CYPHER;
 
-		return static::run( $cypher, [ 'postId' => $post_id, 'sessionId' => session_id() ] );
+		return $this->run( $cypher, [ 'postId' => $post_id, 'sessionId' => session_id() ] );
 	}
 
 	/**
@@ -91,7 +96,6 @@ class Recommend {
             LIMIT 5
             CYPHER;
 
-		return static::run( $cypher, [ 'postId' => $post_id, 'sessionId' => session_id() ] );
+		return $this->run( $cypher, [ 'postId' => $post_id, 'sessionId' => session_id() ] );
 	}
-
 }

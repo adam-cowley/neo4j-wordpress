@@ -10,13 +10,14 @@ class Category
     /**
      * Create a Cypher Query for a Category
      */
-    public static function merge(Transaction $tx, WP_Term $category): void {
+    public static function merge(Transaction $tx, WP_Term $category): void
+    {
         $cypher = <<<'CYPHER'
             MERGE (t:Taxonomy:Category {term_id: $termId})
             SET t += $category
             CYPHER;
 
-        $tx->run($cypher, ['termId' => $category->term_id, 'category' => (array) $category]);
+        $tx->run($cypher, ['termId' => $category->term_id, 'category' => (array)$category]);
     }
 
 }

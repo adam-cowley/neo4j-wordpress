@@ -1,6 +1,7 @@
 # Neo4j & Wordpress
 
-This repository provides a barebones Neo4j integration for Wordpress, using wordpress actions to synchronise data with Neo4j and then provide real time content recommendations.
+This repository provides a barebones Neo4j integration for Wordpress, using wordpress actions to synchronise data with
+Neo4j and then provide real time content recommendations.
 
 You can view the posts at:
 

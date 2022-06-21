@@ -31,6 +31,28 @@ class Neopress
     private static string $_user;
 
     /**
+     * Return User ID
+     */
+    public static function user(): string
+    {
+        return static::$_user;
+    }
+
+    /**
+     * Singleton Class
+     */
+    public static function init(): self
+    {
+        if (!static::$_instance) {
+            static::$_instance = new static;
+
+            static::session();
+        }
+
+        return static::$_instance;
+    }
+
+    /**
      * Make sure a session has been started, so we have a unique Session ID
      */
     public static function session(): void
@@ -57,28 +79,6 @@ class Neopress
         $path = '/';
 
         setcookie('neopress', static::$_user, $expires, $path);
-    }
-
-    /**
-     * Return User ID
-     */
-    public static function user(): string
-    {
-        return static::$_user;
-    }
-
-    /**
-     * Singleton Class
-     */
-    public static function init(): self
-    {
-        if (!static::$_instance) {
-            static::$_instance = new static;
-
-            static::session();
-        }
-
-        return static::$_instance;
     }
 
     /**

@@ -2,26 +2,27 @@
 
 namespace Neopress;
 
-class Session {
+class Session
+{
 
     /**
      * Create a Cypher Query for a Category
      */
-    public static function log(): void {
+    public static function log(): void
+    {
         // Merge Page
         $cypher = 'MERGE (p:Post {ID: $pageId})';
         $params = ['pageId' => get_the_ID()];
 
         // Attribute the Pageview to a Session
-        if ( $session_id = session_id() ) {
+        if ($session_id = session_id()) {
             // Set User's WordPress ID if logged in
             if ($user_id = get_current_user_id()) {
                 $cypher .= ' MERGE (u:User {user_id:$userId})';
                 $cypher .= ' SET u.id = $id';
 
                 $params['userId'] = $user_id;
-            }
-            else {
+            } else {
                 $cypher .= ' MERGE (u:User {id: $id})';
             }
 

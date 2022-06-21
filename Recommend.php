@@ -5,15 +5,13 @@ namespace Neopress;
 use WP_Query;
 
 
-class Recommend
-{
+class Recommend {
 
-    /**
-     * Provide a simple list of recommendations by Taxonomy
-     */
-    public static function byTaxonomy(int $post_id): WP_Query
-    {
-        $cypher = <<<'CYPHER'
+	/**
+	 * Provide a simple list of recommendations by Taxonomy
+	 */
+	public static function byTaxonomy( int $post_id ): WP_Query {
+		$cypher = <<<'CYPHER'
             MATCH (p:Post)-[:HAS_TAXONOMY]->(:Taxonomy)<-[:HAS_TAXONOMY]-(recommended:Post)
             WHERE p.ID = $postId
             AND recommended.status = 'publish'
@@ -22,31 +20,29 @@ class Recommend
             LIMIT 5
             CYPHER;
 
-        return static::run($cypher, ['postId' => $post_id]);
-    }
+		return static::run( $cypher, [ 'postId' => $post_id ] );
+	}
 
-    /**
-     * As all of our posts are going to be returning the same information
-     * we should use a
-     */
-    private static function run(string $cypher, array $params): WP_Query
-    {
-        $results = Neopress::client()->run($cypher, $params);
+	/**
+	 * As all of our posts are going to be returning the same information
+	 * we should use a
+	 */
+	private static function run( string $cypher, array $params ): WP_Query {
+		$results = Neopress::client()->run( $cypher, $params );
 
-        // Get Post ID's from Query
-        // TODO: A Map function in the SDK could be cool.
-        // - I even implemented pluck to simplify it further :) - Ghlen
-        return new WP_Query([
-            'post__in' => $results->pluck('id')->toArray()
-        ]);
-    }
+		// Get Post ID's from Query
+		// TODO: A Map function in the SDK could be cool.
+		// - I even implemented pluck to simplify it further :) - Ghlen
+		return new WP_Query( [
+			'post__in' => $results->pluck( 'id' )->toArray()
+		] );
+	}
 
-    /**
-     * Provide a weighted list of Recommendations based on Taxonomies and
-     */
-    public static function byWeighting(int $post_id): WP_Query
-    {
-        $cypher = <<<'CYPHER'
+	/**
+	 * Provide a weighted list of Recommendations based on Taxonomies and
+	 */
+	public static function byWeighting( int $post_id ): WP_Query {
+		$cypher = <<<'CYPHER'
             MATCH (p:Post)-[:HAS_TAXONOMY|AUTHORED]-(target)-[:HAS_TAXONOMY|AUTHORED]-(recommended:Post)
             WHERE p.ID = $postId
             AND recommended.status = 'publish'
@@ -56,15 +52,14 @@ class Recommend
             LIMIT 5
         CYPHER;
 
-        return static::run($cypher, ['postId' => $post_id]);
-    }
+		return static::run( $cypher, [ 'postId' => $post_id ] );
+	}
 
-    /**
-     * Recommend unread posts similar to this post
-     */
-    public function unreadForSession(int $post_id): WP_Query
-    {
-        $cypher = <<<'CYPHER'
+	/**
+	 * Recommend unread posts similar to this post
+	 */
+	public function unreadForSession( int $post_id ): WP_Query {
+		$cypher = <<<'CYPHER'
             MATCH (s:Session) WHERE s.session_id = $sessionId
             MATCH (p:Post)-[:HAS_TAXONOMY|AUTHORED]-(target)-[:HAS_TAXONOMY|AUTHORED]-(recommended:Post)
             WHERE p.ID = $postId
@@ -76,15 +71,14 @@ class Recommend
             LIMIT 5
             CYPHER;
 
-        return static::run($cypher, ['postId' => $post_id, 'sessionId' => session_id()]);
-    }
+		return static::run( $cypher, [ 'postId' => $post_id, 'sessionId' => session_id() ] );
+	}
 
-    /**
-     * Recommend unread posts similar to this post
-     */
-    public function unreadForUser(int $post_id): WP_Query
-    {
-        $cypher = <<<'CYPHER'
+	/**
+	 * Recommend unread posts similar to this post
+	 */
+	public function unreadForUser( int $post_id ): WP_Query {
+		$cypher = <<<'CYPHER'
             MATCH (s:Session) WHERE s.session_id = $sessionId
             MATCH (p:Post)-[:HAS_TAXONOMY|AUTHORED]-(target)-[:HAS_TAXONOMY|AUTHORED]-(recommended:Post)
             WHERE p.ID = $postId
@@ -97,7 +91,7 @@ class Recommend
             LIMIT 5
             CYPHER;
 
-        return static::run($cypher, ['postId' => $post_id, 'sessionId' => session_id()]);
-    }
+		return static::run( $cypher, [ 'postId' => $post_id, 'sessionId' => session_id() ] );
+	}
 
 }

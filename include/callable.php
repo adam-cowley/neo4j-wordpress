@@ -2,22 +2,23 @@
 
 namespace Neopress;
 
-use Closure;
 use DI\ContainerBuilder;
 
-function make_callable(array $pseudoCallable): Closure
-{
+/**
+ * @return callable
+ */
+function make_callable( array $pseudoCallable ) {
 	static $container = null;
-	if ($container ===  null) {
-		$container =  (new ContainerBuilder())
-			->addDefinitions(__DIR__ . '/../register.php')
-			->useAutowiring(true)
+	if ( $container === null ) {
+		$container = ( new ContainerBuilder() )
+			->addDefinitions( __DIR__ . '/../register.php' )
+			->useAutowiring( true )
 			->build();
 	}
 
-	return Closure::fromCallable(static function () use ($container, $pseudoCallable) {
-		[$class, $method] = $pseudoCallable;
+	return static function () use ( &$container, $pseudoCallable ) {
+		[ $class, $method ] = $pseudoCallable;
 
-		return $container->get($class)->$method();
-	});
+		return $container->get( $class )->$method();
+	};
 }

@@ -102,17 +102,6 @@ class WordpressStore {
 	}
 
 	/**
-	 * Create a Cypher Query for a Category
-	 */
-	public function mergeAuthor( Transaction $tx, int $user_id ): void {
-		$cypher = <<<'CYPHER'
-        MERGE (u:User {user_id: $userId})
-        CYPHER;
-
-		$tx->run( $cypher, [ 'userId' => $user_id ] );
-	}
-
-	/**
 	 * Add a merge query to the transaction to update the post
 	 */
 	private function mergePost( Transaction $tx, int $post_id ): void {
@@ -169,6 +158,17 @@ class WordpressStore {
 		];
 
 		$tx->run( $cypher, $params );
+	}
+
+	/**
+	 * Create a Cypher Query for a Category
+	 */
+	public function mergeAuthor( Transaction $tx, int $user_id ): void {
+		$cypher = <<<'CYPHER'
+        MERGE (u:User {user_id: $userId})
+        CYPHER;
+
+		$tx->run( $cypher, [ 'userId' => $user_id ] );
 	}
 
 	/**

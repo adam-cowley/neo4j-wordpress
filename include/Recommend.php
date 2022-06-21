@@ -8,7 +8,7 @@ use WP_Query;
 class Recommend {
 	private \Laudis\Neo4j\Basic\Session $session;
 
-	public function __construct(\Laudis\Neo4j\Basic\Session $session) {
+	public function __construct( \Laudis\Neo4j\Basic\Session $session ) {
 		$this->session = $session;
 	}
 

@@ -5,7 +5,7 @@
   "require": {
     "laudis/neo4j-php-client": "^2.6",
     "php": "^7.4 || ^8.0",
-    "php-di/php-di": "dev-master"
+    "php-di/php-di": "^6.0"
   },
   "license": "GPL-2.0-or-later",
   "authors": [
@@ -20,8 +20,11 @@
   ],
   "autoload": {
     "psr-4": {
-      "Neopress\\": "./include"
-    }
+      "Neopress\\": "include"
+    },
+    "files": [
+      "include/callable.php"
+    ]
   },
   "minimum-stability": "dev"
 }

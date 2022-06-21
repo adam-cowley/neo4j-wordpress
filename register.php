@@ -1,11 +1,14 @@
 <?php
 
 use Laudis\Neo4j\Basic\Driver;
-use Laudis\Neo4j\Bolt\Session;
+use Laudis\Neo4j\Basic\Session;
+use Laudis\Neo4j\Contracts\DriverInterface;
+use Laudis\Neo4j\Contracts\SessionInterface;
 use Psr\Container\ContainerInterface;
+use function DI\create;
 
 return [
-	Session::class => static function ( ContainerInterface $c) {
+	Session::class => static function ( ContainerInterface $c ) {
 		return $c->get( Driver::class )->createSession();
 	},
 
@@ -41,5 +44,8 @@ return [
 		setcookie( 'neopress', $tbr, $expires, $path );
 
 		return $tbr;
-	}
+	},
+
+	SessionInterface::class => create( Session::class ),
+	DriverInterface::class  => create( Driver::class )
 ];

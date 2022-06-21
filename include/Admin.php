@@ -3,16 +3,29 @@
 namespace Neopress;
 
 use Laudis\Neo4j\Basic\Driver;
+use Laudis\Neo4j\Basic\Session;
 use function add_settings_section;
 use function register_setting;
 
 class Admin {
 	private Driver $driver;
-	private \Laudis\Neo4j\Basic\Session $session;
+	private Session $session;
 
-	public function __construct( Driver $driver, \Laudis\Neo4j\Basic\Session $session) {
-		$this->driver = $driver;
+	public function __construct( Driver $driver, Session $session ) {
+		$this->driver  = $driver;
 		$this->session = $session;
+	}
+
+	/**
+	 * Display HTML for Password input
+	 *
+	 * TODO: Encrypt authentication details in database
+	 */
+	public static function option_neopress_password(): void {
+		printf(
+			'<input type="password" id="neopress_password" name="neopress_password" value="%s" />',
+			get_option( 'neopress_password' )
+		);
 	}
 
 	/**
@@ -29,7 +42,7 @@ class Admin {
 		add_settings_section(
 			'neopress_connection',
 			__( 'Connection Settings', 'neopress' ),
-			[Admin::class, 'checkConnectionStatus'],
+			[ Admin::class, 'checkConnectionStatus' ],
 			'neopress'
 		);
 	}
@@ -51,7 +64,6 @@ class Admin {
 
 		printf( '<div id="neopress-response" class="%s">%s</strong></div>', $class, $message );
 	}
-
 
 	/**
 	 * Register Configuration Menu
@@ -95,18 +107,6 @@ class Admin {
 		printf(
 			'<input type="text" id="neopress_username" name="neopress_username" value="%s" />',
 			get_option( 'neopress_username' )
-		);
-	}
-
-	/**
-	 * Display HTML for Password input
-	 *
-	 * TODO: Encrypt authentication details in database
-	 */
-	public static function option_neopress_password(): void {
-		printf(
-			'<input type="password" id="neopress_password" name="neopress_password" value="%s" />',
-			get_option( 'neopress_password' )
 		);
 	}
 

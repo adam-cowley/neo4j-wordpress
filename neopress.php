@@ -25,20 +25,24 @@ You should have received a copy of the GNU General Public License
 along with Neopress. If not, see LICENSE.md
 */
 
-namespace Neopress;
+use Neopress\Admin;
+use Neopress\NeoPress;
+use Neopress\WordpressStore;
+use function Neopress\make_callable;
 
 defined( 'ABSPATH' ) or die( 'No dice.' );
 
 // Include Vendor Files
 require_once 'vendor/autoload.php';
 
+
 if ( is_admin() ) {
-	add_action( 'admin_init', make_callable([Admin::class, 'init']));
+	add_action( 'admin_init', make_callable([ Admin::class, 'init']));
 	add_action( 'admin_menu', make_callable([Admin::class, 'menu']) );
 
-	add_action( 'save_post', make_callable([WordpressStore::class, 'merge']) );
+	add_action( 'save_post', make_callable([ WordpressStore::class, 'merge']) );
 } else {
-	add_action( 'shutdown', make_callable([NeoPress::class, 'shutdown']) );
+	add_action( 'shutdown', make_callable([ NeoPress::class, 'shutdown']) );
 }
 
 

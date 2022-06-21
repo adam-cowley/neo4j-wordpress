@@ -13,9 +13,9 @@ class NeoPress {
 	private Session $session;
 	private string $userId;
 
-	public function __construct( Session $session, string $userId) {
+	public function __construct( Session $session, string $userId ) {
 		$this->session = $session;
-		$this->userId = $userId;
+		$this->userId  = $userId;
 	}
 
 	/**

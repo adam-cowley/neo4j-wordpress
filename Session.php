@@ -2,35 +2,31 @@
 
 namespace Neopress;
 
-use WP_User;
-
 class Session {
 
     /**
      * Create a Cypher Query for a Category
-     *
-     * @return void
      */
-    public static function log() {
+    public static function log(): void {
         // Merge Page
-        $cypher = 'MERGE (p:Post {ID: {page_id}})';
-        $params = ['page_id' => get_the_ID()];
+        $cypher = 'MERGE (p:Post {ID: $pageId})';
+        $params = ['pageId' => get_the_ID()];
 
         // Attribute the Pageview to a Session
         if ( $session_id = session_id() ) {
-            // Set User's Wordpress ID if logged in
+            // Set User's WordPress ID if logged in
             if ($user_id = get_current_user_id()) {
-                $cypher .= ' MERGE (u:User {user_id:{user_id}})';
-                $cypher .= ' SET u.id = {id}';
+                $cypher .= ' MERGE (u:User {user_id:$userId})';
+                $cypher .= ' SET u.id = $id';
 
-                $params['user_id'] = $user_id;
+                $params['userId'] = $user_id;
             }
             else {
-                $cypher .= ' MERGE (u:User {id: {id}})';
+                $cypher .= ' MERGE (u:User {id: $id})';
             }
 
             // Create Session
-            $cypher .= ' MERGE (s:Session {session_id: {session_id}})';
+            $cypher .= ' MERGE (s:Session {session_id: $sessionId})';
 
             // Attribute Session to User
             $cypher .= ' MERGE (u)-[:HAS_SESSION]->(s)';
@@ -42,16 +38,16 @@ class Session {
             $cypher .= ' CREATE (v)-[:VISITED]->(p)';
 
             $params['id'] = Neopress::user();
-            $params['session_id'] = $session_id;
+            $params['sessionId'] = $session_id;
         }
 
         // Create :NEXT relationship from last pageview
         if (array_key_exists('neopress_last_pageview', $_SESSION)) {
             $cypher .= ' WITH v';
-            $cypher .= ' MATCH (last:Pageview) WHERE id(last) = {last_pageview}';
+            $cypher .= ' MATCH (last:Pageview) WHERE id(last) = $lastPageview';
             $cypher .= ' CREATE (last)-[:NEXT]->(v)';
 
-            $params['last_pageview'] = $_SESSION['neopress_last_pageview'];
+            $params['lastPageview'] = $_SESSION['neopress_last_pageview'];
         }
 
         // Return Pageview ID

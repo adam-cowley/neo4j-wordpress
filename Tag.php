@@ -9,17 +9,15 @@ class Tag {
 
     /**
      * Create a Cypher Query for a Category
-     *
-     * @param  Int $post_id
      * @return void
      */
     public static function merge(Transaction $tx, WP_Term $tag) {
-        $cypher = sprintf('
-            MERGE (t:Taxonomy:Tag {term_id: {term_id}})
-            SET t += {tag}
-        ');
+        $cypher = <<<'CYPHER'
+            MERGE (t:Taxonomy:Tag {term_id: $termId})
+            SET t += $tag
+        CYPHER;
 
-        $tx->run($cypher, ['term_id' => $tag->term_id, 'tag' => (array) $tag]);
+        $tx->run($cypher, ['termId' => $tag->term_id, 'tag' => (array) $tag]);
     }
 
 }

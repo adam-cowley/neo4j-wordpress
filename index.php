@@ -1,38 +1,40 @@
 <?php
 /**
-Plugin Name: Neopress
-Description: Neo4j Recommendation Engine for Wordpress
-Version: 1.0
-Author: Adam Cowley
-Author URI: http://wecommit.co
-License: GPLv2 or later
-Text Domain: neopress
-*/
+ * Plugin Name: Neopress
+ * Description: Neo4j Recommendation Engine for WordPress
+ * Version: 1.0
+ * Author: Adam Cowley
+ * Author URI: http://wecommit.co
+ * License: GPLv2 or later
+ * Text Domain: neopress
+ */
 
 namespace Neopress;
 
 // No Hackers
 use Laudis\Neo4j\Basic\Driver;
 
-defined( 'ABSPATH' ) or die( 'No dice.');
+defined('ABSPATH') or die('No dice.');
 
 // Include Vendor Files
 require_once 'vendor/autoload.php';
 
-class Neopress {
-    private static \Laudis\Neo4j\Basic\Session $_client;
+class Neopress
+{
+    private static \Laudis\Neo4j\Basic\Session $_session;
+    private static Driver $_driver;
 
     /** @var Neopress Singleton instance */
-    private static $_instance;
+    private static self $_instance;
 
     /** @var string User ID */
-    private static $_user;
+    private static string $_user;
 
     /**
-     * Make sure a session has been started so we have a unique Session ID
-     * @return void
+     * Make sure a session has been started, so we have a unique Session ID
      */
-    public static function session() {
+    public static function session(): void
+    {
         // Start Session
         session_start();
 
@@ -42,18 +44,16 @@ class Neopress {
 
     /**
      * Identify the current User or create a new ID
-     *
-     * @return void
      */
-    private static function identify() {
-        if ( array_key_exists('neopress', $_COOKIE) ) {
+    private static function identify(): void
+    {
+        if (array_key_exists('neopress', $_COOKIE)) {
             static::$_user = $_COOKIE['neopress'];
-        }
-        else {
+        } else {
             static::$_user = uniqid();
         }
 
-        $expires = time()+60*60*24*30;
+        $expires = time() + 60 * 60 * 24 * 30;
         $path = '/';
 
         setcookie('neopress', static::$_user, $expires, $path);
@@ -61,20 +61,18 @@ class Neopress {
 
     /**
      * Return User ID
-     *
-     * @return string
      */
-    public static function user() {
+    public static function user(): string
+    {
         return static::$_user;
     }
 
     /**
      * Singleton Class
-     *
-     * @return Neopress
      */
-    public static function init() {
-        if ( !static::$_instance ) {
+    public static function init(): self
+    {
+        if (!static::$_instance) {
             static::$_instance = new static;
 
             static::session();
@@ -86,8 +84,21 @@ class Neopress {
     /**
      * Get Neo4j Client Instance
      */
-    public static function client(): \Laudis\Neo4j\Basic\Session {
-        if ( !static::$_client ) {
+    public static function client(): \Laudis\Neo4j\Basic\Session
+    {
+        if (!static::$_session) {
+            static::$_session = self::driver()->createSession();
+        }
+
+        return static::$_session;
+    }
+
+    /**
+     * Get Neo4j Client Instance
+     */
+    public static function driver(): Driver
+    {
+        if (!static::$_session) {
             // Create Neo Client
             $connection_string = sprintf('://%s:%s@%s:',
                 get_option('neopress_username', 'neo4j'),
@@ -95,11 +106,10 @@ class Neopress {
                 get_option('neopress_host', 'localhost')
             );
 
-            static::$_client = Driver::create('bolt'. $connection_string .get_option('neopress_bolt_port', 7687))
-                ->createSession();
+            static::$_driver = Driver::create('bolt' . $connection_string . get_option('neopress_bolt_port', 7687));
         }
 
-        return static::$_client;
+        return static::$_driver;
     }
 
     /**
@@ -107,7 +117,8 @@ class Neopress {
      *
      * @return void
      */
-    public static function shutdown() {
+    public static function shutdown(): void
+    {
         if (is_single()) {
             Session::log();
         }
@@ -115,18 +126,17 @@ class Neopress {
 
 }
 
-if ( is_admin() ) {
-    add_action('admin_init', Neopress::class .'::init');
+if (is_admin()) {
+    add_action('admin_init', Neopress::class . '::init');
 
 
-    add_action('admin_init', Admin::class    .'::init');
-    add_action('admin_menu', Admin::class    .'::menu');
+    add_action('admin_init', [Admin::class . '::init']);
+    add_action('admin_menu', Admin::class . '::menu');
 
-    add_action('save_post',  Post::class     .'::merge');
-}
-else {
-    add_action('init',       Neopress::class .'::session');
-    add_action('shutdown',   Neopress::class .'::shutdown');
+    add_action('save_post', Post::class . '::merge');
+} else {
+    add_action('init', Neopress::class . '::session');
+    add_action('shutdown', Neopress::class . '::shutdown');
 }
 
 

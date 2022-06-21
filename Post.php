@@ -14,41 +14,37 @@ class Post {
      * @param  int          $post_id
      * @return void
      */
-    private static function mergePost(Transaction $tx, $post_id) {
-        // Write Cypher MERGE query
-        $cypher = sprintf('
-            MERGE (p:Post {ID: {post_id}})
+    private static function mergePost(Transaction $tx, int $post_id) {
+        $cypher = <<<'CYPHER'
+            MERGE (p:Post {ID: $postId})
             ON CREATE SET p.created_at = timestamp()
             ON MATCH SET p.updated_at = timestamp()
-            SET p.permalink = {permalink},
-                p.title = {title},
-                p.status = {status}
-        ');
+            SET p.permalink = $permalink,
+                p.title = $title,
+                p.status = $status
+        CYPHER;
 
         // Set Parameters
         $params = [
-            'post_id' => $post_id,
+            'postId' => $post_id,
             'permalink' => get_permalink( $post_id ),
             'title' => get_the_title( $post_id ),
             'status' => get_post_status( $post_id ),
         ];
 
         // Add to Transaction
-        $tx->push($cypher, $params);
+        $tx->run($cypher, $params);
     }
 
     /**
-     * Detach a Post from it's Taxonomies
-     *
-     * @param  Transaction $tx
-     * @param  int         $post_id
-     * @return void
+     * Detach a Post from its Taxonomies
      */
-    private static function detachPost(Transaction $tx, $post_id) {
-        $cypher = 'MATCH (p:Post {ID: {post_id}})-[r]-() DELETE r';
-        $params = ['post_id' => $post_id];
+    private static function detachPost(Transaction $tx, int $post_id): void
+    {
+        $cypher = 'MATCH (p:Post {ID: $postId})-[r]-() DELETE r';
+        $params = ['postId' => $post_id];
 
-        $tx->push($cypher, $params);
+        $tx->run($cypher, $params);
     }
 
     /**
@@ -58,17 +54,17 @@ class Post {
      * @param int         $post_id
      * @param array       $terms
      */
-    private static function relateTaxonomies(Transaction $tx, $post_id, array $terms) {
-        $cypher = '
-            MATCH (p:Post {ID: {post_id}})
-            WITH p, {terms} as terms
-            UNWIND terms AS term_id
+    private static function relateTaxonomies(Transaction $tx, int $post_id, array $terms) {
+        $cypher = <<<'CYPHER'
+            MATCH (p:Post {ID: $postId})
+            WITH p
+            UNWIND $terms AS term_id
             MATCH (t:Taxonomy) where t.term_id = term_id
             MERGE (p)-[:HAS_TAXONOMY]->(t)
-        ';
+        CYPHER;
 
         $params = [
-            'post_id' => $post_id,
+            'postId' => $post_id,
             'terms' => $terms
         ];
 
@@ -77,36 +73,32 @@ class Post {
 
     /**
      * Create a relationship between the Post and the Author
-     *
-     * @param  Transaction $tx
-     * @param  int         $post_id
-     * @param  int         $user_id
-     * @return void
      */
-    private static function relateAuthor(Transaction $tx, $post_id, $user_id) {
-        $cypher = '
-            MATCH (p:Post {ID: {post_id}})
-            MATCH (u:User {user_id: {user_id}})
+    private static function relateAuthor(Transaction $tx, int $post_id, int $user_id): void
+    {
+        $cypher = <<<'CYPHER'
+            MATCH (p:Post {ID: $postId})
+            MATCH (u:User {user_id: $userId})
             MERGE (u)-[:AUTHORED]->(p)
-        ';
+        CYPHER;
 
-        $tx->run($cypher, ['post_id' => $post_id, 'user_id' => $user_id]);
+        $tx->run($cypher, ['postId' => $post_id, 'userId' => $user_id]);
     }
 
     /**
-     * Merge a Post by it's Post ID
+     * Merge a Post by its Post ID
      *
      * @param  Int $post_id
      * @return void
      */
-    public static function merge($post_id) {
+    public static function merge(int $post_id) {
         // Check Post isn't revision
         if ( wp_is_post_revision( $post_id ) ) {
             return;
         }
 
         // Create a new Transaction
-        $tx = Neopress::client()->transaction();
+        $tx = Neopress::client()->beginTransaction();
 
         try {
             // Store an array of Term ID's to merge later
@@ -116,7 +108,7 @@ class Post {
             $categories = get_the_category($post_id);
 
             foreach ($categories as $category) {
-                array_push($terms, $category->term_id);
+                $terms[] = $category->term_id;
 
                 Category::merge($tx, $category);
             }
@@ -124,7 +116,7 @@ class Post {
             // ...and the same for tags
             if ( $tags = get_the_tags($post_id) ) {
                 foreach ($tags as $tag) {
-                    array_push($terms, $tag->term_id);
+                    $terms[] = $tag->term_id;
 
                     Tag::merge($tx, $tag);
                 }

@@ -4,105 +4,100 @@ namespace Neopress;
 
 use Laudis\Neo4j\Basic\Driver;
 use function array_key_exists;
+use function get_option;
 use function is_single;
 use function session_id;
 use function session_start;
-use function sprintf;
 use function time;
 use function uniqid;
 
-class Neopress {
-	private static \Laudis\Neo4j\Basic\Session $_session;
-	private static Driver $_driver;
-
-	/** @var Neopress Singleton instance */
+class NeoPress {
+	/** @var NeoPress Singleton instance */
 	private static self $_instance;
 
-	/** @var string User ID */
-	private static string $_user;
+	private Driver $driver;
+	private string $user;
+	private ?Session $session = null;
+
+	private function __construct( Driver $driver, string $user ) {
+		$this->driver = $driver;
+		$this->user   = $user;
+	}
+
+	private static function initializeDriver(): Driver {
+		$connectionString = 'neo4j://';
+		if ( get_option( 'neopress_username' ) && get_option( 'neopress_password' ) ) {
+			$connectionString .= get_option( 'neopress_username' ) . ':' . get_option( 'neopress_password' ) . '@';
+		}
+		
+		$connectionString .= get_option( 'neopress_host', 'localhost' );
+
+		if ( get_option( 'neopress_bolt_port' ) ) {
+			$connectionString .= get_option( 'neopress_bolt_port' );
+		}
+
+		return Driver::create( $connectionString );
+	}
 
 	/**
 	 * Return User ID
 	 */
-	public static function user(): string {
-		return static::$_user;
+	public function getUser(): string {
+		return $this->user;
 	}
 
 	/**
 	 * Singleton Class
 	 */
-	public static function init(): self {
-		if ( ! isset( static::$_instance ) ) {
-			static::$_instance = new static;
-
-			static::session();
-		}
-
-		return static::$_instance;
+	public static function get(): self {
+		return static::$_instance ??= new self( NeoPress::initializeDriver(), NeoPress::identifyUser() );
 	}
 
 	/**
 	 * Make sure a session has been started, so we have a unique Session ID
 	 */
-	public static function session(): void {
-		// Start Session
-		if (session_id() === '') {
+	public static function identifyUser(): string {
+		if ( session_id() === '' ) {
 			session_start();
 		}
 
-		// Identify User
-		static::identify();
+		return static::identify();
 	}
 
 	/**
 	 * Identify the current User or create a new ID
 	 */
-	private static function identify(): void {
+	private static function identify(): string {
 		if ( array_key_exists( 'neopress', $_COOKIE ) ) {
-			static::$_user = $_COOKIE['neopress'];
+			$tbr = $_COOKIE['neopress'];
 		} else {
-			static::$_user = uniqid();
+			$tbr = uniqid();
 		}
 
 		$expires = time() + 60 * 60 * 24 * 30;
 		$path    = '/';
 
 		setcookie( 'neopress', static::$_user, $expires, $path );
+
+		return $tbr;
 	}
 
 	/**
 	 * Get Neo4j Client Instance
 	 */
-	public static function client(): \Laudis\Neo4j\Basic\Session {
-		if ( ! isset( static::$_session ) ) {
-			static::$_session = self::driver()->createSession();
-		}
-
-		return static::$_session;
+	public function getSession(): \Laudis\Neo4j\Basic\Session {
+		return $this->session ??= $this->driver->createSession();
 	}
 
 	/**
 	 * Get Neo4j Client Instance
 	 */
-	public static function driver(): Driver {
-		if ( ! isset( static::$_driver ) ) {
-			// Create Neo Client
-			$connection_string = sprintf( '://%s:%s@%s:',
-				get_option( 'neopress_username', 'neo4j' ),
-				get_option( 'neopress_password', 'neo' ),
-				get_option( 'neopress_host', 'localhost' )
-			);
-
-			static::$_driver = Driver::create( 'bolt' . $connection_string . get_option( 'neopress_bolt_port', 7687 ) );
-		}
-
-		return static::$_driver;
+	public function getDriver(): Driver {
+		return $this->driver;
 	}
 
 	/**
 	 * Register Shutdown Hook
-	 *
-	 * @return void
 	 */
 	public static function shutdown(): void {
 		if ( is_single() ) {

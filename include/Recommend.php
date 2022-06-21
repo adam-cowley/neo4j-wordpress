@@ -28,7 +28,7 @@ class Recommend {
 	 * we should use a
 	 */
 	private static function run( string $cypher, array $params ): WP_Query {
-		$results = Neopress::client()->run( $cypher, $params );
+		$results = NeoPress::client()->run( $cypher, $params );
 
 		// Get Post ID's from Query
 		// TODO: A Map function in the SDK could be cool.

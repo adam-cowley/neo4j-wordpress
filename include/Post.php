@@ -21,7 +21,7 @@ class Post {
 		}
 
 		// Create a new Transaction
-		$tx = Neopress::client()->beginTransaction();
+		$tx = NeoPress::client()->beginTransaction();
 
 		try {
 			// Store an array of Term ID's to merge later

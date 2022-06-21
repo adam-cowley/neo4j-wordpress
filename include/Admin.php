@@ -34,9 +34,9 @@ class Admin {
 	 */
 	public static function checkConnectionStatus(): void {
 
-		if ( Neopress::driver()->verifyConnectivity() ) {
+		if ( NeoPress::driver()->verifyConnectivity() ) {
 			$class   = 'updated';
-			$result  = Neopress::client()->run( 'MATCH (x) RETURN count(x) AS count' );
+			$result  = NeoPress::client()->run( 'MATCH (x) RETURN count(x) AS count' );
 			$message = sprintf( '<p><strong>Connection Successful.</strong></p><p>There are <strong>%d</strong> nodes in your database', $result->getAsMap( 0 )->get( 'count' ) );
 		} else {
 			$class   = 'error';

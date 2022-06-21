@@ -36,7 +36,7 @@ class Session {
 			// Relate Pageview to Page
 			$cypher .= ' CREATE (v)-[:VISITED]->(p)';
 
-			$params['id']        = Neopress::user();
+			$params['id']        = NeoPress::getUser();
 			$params['sessionId'] = $session_id;
 		}
 
@@ -53,7 +53,7 @@ class Session {
 		$cypher .= 'RETURN id(v) as id';
 
 		// Run Query
-		$result = Neopress::client()->run( $cypher, $params );
+		$result = NeoPress::client()->run( $cypher, $params );
 
 		// Store Last Pageview in Session
 		$_SESSION['neopress_last_pageview'] = $result->getAsMap( 0 )->get( 'id' );

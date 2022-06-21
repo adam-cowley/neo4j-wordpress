@@ -20,8 +20,8 @@ return [
 
 		$connectionString .= get_option( 'neopress_host', 'localhost' );
 
-		if ( get_option( 'neopress_bolt_port' ) ) {
-			$connectionString .= get_option( 'neopress_bolt_port' );
+		if ( get_option( 'neopress_port' ) ) {
+			$connectionString .= get_option( 'neopress_port' );
 		}
 
 		return Driver::create( $connectionString );

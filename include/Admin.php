@@ -2,10 +2,12 @@
 
 namespace Neopress;
 
+use Closure;
 use Laudis\Neo4j\Basic\Driver;
 use Laudis\Neo4j\Basic\Session;
 use function add_settings_section;
 use function register_setting;
+use function strtolower;
 
 class Admin {
 	private Driver $driver;
@@ -36,13 +38,12 @@ class Admin {
 		register_setting( 'neopress_connection', 'neopress_password' );
 		register_setting( 'neopress_connection', 'neopress_host' );
 		register_setting( 'neopress_connection', 'neopress_port' );
-		register_setting( 'neopress_connection', 'neopress_bolt_port' );
 
 
 		add_settings_section(
 			'neopress_connection',
 			__( 'Connection Settings', 'neopress' ),
-			[ Admin::class, 'checkConnectionStatus' ],
+			make_callable([ Admin::class, 'checkConnectionStatus' ]),
 			'neopress'
 		);
 	}
@@ -76,23 +77,22 @@ class Admin {
 			__( "Neopress", 'neopress' ),
 			'manage_options',
 			'neopress',
-			static::class . '::menuConnection'
+			[$this, 'menuConnection']
 		);
 
 
 		$options = [
-			'neopress_username'  => 'Username',
-			'neopress_password'  => 'Password',
-			'neopress_host'      => 'Host',
-			'neopress_port'      => 'HTTP Port',
-			'neopress_bolt_port' => 'Bolt Port',
+			'Username' => Closure::fromCallable([$this, 'option_neopress_username']),
+			'Password' => Closure::fromCallable([$this, 'option_neopress_password']),
+			'Host' => Closure::fromCallable([$this, 'option_neopress_host']),
+			'Port' => Closure::fromCallable([$this, 'option_neopress_port']),
 		];
 
-		foreach ( $options as $key => $label ) {
+		foreach ( $options as $label => $callback ) {
 			add_settings_field(
-				$key,
+				'neopress_'.strtolower($label),
 				__( $label, 'neopress' ),
-				static::class . '::option_' . $key,
+				$callback,
 				'neopress',
 				'neopress_connection'
 			);
@@ -116,27 +116,17 @@ class Admin {
 	public function option_neopress_host(): void {
 		printf(
 			'<input type="text" id="neopress_host" name="neopress_host" value="%s" />',
-			get_option( 'neopress_host' )
-		);
-	}
-
-	/**
-	 * Display HTML for Port Input
-	 */
-	public function option_neopress_port(): void {
-		printf(
-			'<input type="number" id="neopress_port" name="neopress_port" value="%s" />',
-			get_option( 'neopress_port', 7474 )
+			get_option( 'neopress_host', 'localhost' )
 		);
 	}
 
 	/**
 	 * Display HTML for Bolt Port Input
 	 */
-	public function option_neopress_bolt_port(): void {
+	public function option_neopress_port(): void {
 		printf(
-			'<input type="number" id="neopress_bolt_port" name="neopress_bolt_port" value="%s" />',
-			get_option( 'neopress_bolt_port', 7876 )
+			'<input type="number" id="neopress_port" name="neopress_port" value="%s" />',
+			get_option( 'neopress_port' )
 		);
 	}
 

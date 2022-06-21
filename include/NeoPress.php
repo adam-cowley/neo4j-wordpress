@@ -5,6 +5,7 @@ namespace Neopress;
 use Laudis\Neo4j\Basic\Driver;
 use function array_key_exists;
 use function is_single;
+use function session_id;
 use function session_start;
 use function sprintf;
 use function time;
@@ -45,7 +46,9 @@ class Neopress {
 	 */
 	public static function session(): void {
 		// Start Session
-		session_start();
+		if (session_id() === '') {
+			session_start();
+		}
 
 		// Identify User
 		static::identify();

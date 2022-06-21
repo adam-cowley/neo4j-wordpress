@@ -17,5 +17,4 @@ class Category {
 
 		$tx->run( $cypher, [ 'termId' => $category->term_id, 'category' => (array) $category ] );
 	}
-
 }

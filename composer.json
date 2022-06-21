@@ -1,21 +1,22 @@
 {
-    "name": "adam-cowley/neopress",
-    "description": "Neo4j Recommendation Engine for Wordpress",
-    "type": "project",
-    "require": {
-        "graphaware/neo4j-php-client": "^4.8"
-    },
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Adam Cowley",
-            "email": "adam@wecommit.co"
-        }
-    ],
-    "autoload": {
-        "psr-4": {
-            "Neopress\\": "./"
-        }
-    },
-    "minimum-stability": "dev"
+  "name": "adam-cowley/neopress",
+  "description": "Neo4j Recommendation Engine for Wordpress",
+  "type": "project",
+  "require": {
+    "laudis/neo4j-php-client": "^2.6",
+    "php": "^7.4 || ^8.0"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Adam Cowley",
+      "email": "adam@wecommit.co"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Neopress\\": "./"
+    }
+  },
+  "minimum-stability": "dev"
 }

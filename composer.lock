@@ -1,1024 +1,719 @@
 {
-    "_readme": [
-        "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
-        "This file is @generated automatically"
-    ],
-    "hash": "e19265b1383300d3a78fd3e03d08f090",
-    "content-hash": "96c32366b52a859597dc745d58741548",
-    "packages": [
-        {
-            "name": "clue/stream-filter",
-            "version": "v1.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/clue/php-stream-filter.git",
-                "reference": "e3bf9415da163d9ad6701dccb407ed501ae69785"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/clue/php-stream-filter/zipball/e3bf9415da163d9ad6701dccb407ed501ae69785",
-                "reference": "e3bf9415da163d9ad6701dccb407ed501ae69785",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Clue\\StreamFilter\\": "src/"
-                },
-                "files": [
-                    "src/functions.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Christian Lück",
-                    "email": "christian@lueck.tv"
-                }
-            ],
-            "description": "A simple and modern approach to stream filtering in PHP",
-            "homepage": "https://github.com/clue/php-stream-filter",
-            "keywords": [
-                "bucket brigade",
-                "callback",
-                "filter",
-                "php_user_filter",
-                "stream",
-                "stream_filter_append",
-                "stream_filter_register"
-            ],
-            "time": "2015-11-08 23:41:30"
-        },
-        {
-            "name": "graphaware/neo4j-bolt",
-            "version": "1.9.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/graphaware/neo4j-bolt-php.git",
-                "reference": "906dc29210f7180112eaecc2c92e015f74f431fb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/graphaware/neo4j-bolt-php/zipball/906dc29210f7180112eaecc2c92e015f74f431fb",
-                "reference": "906dc29210f7180112eaecc2c92e015f74f431fb",
-                "shasum": ""
-            },
-            "require": {
-                "ext-bcmath": "*",
-                "ext-mbstring": "*",
-                "graphaware/neo4j-common": "^3.4",
-                "myclabs/php-enum": "^1.4",
-                "php": ">= 5.6",
-                "symfony/event-dispatcher": "^2.7|^3.0"
-            },
-            "require-dev": {
-                "behat/behat": "~3.0.4",
-                "phpunit/phpunit": "^4.8",
-                "symfony/stopwatch": "^2.7"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "GraphAware\\Bolt\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Christophe Willemsen",
-                    "email": "christophe@graphaware.com"
-                }
-            ],
-            "description": "Neo4j Bolt Binary Protocol PHP Driver",
-            "time": "2017-02-27 00:45:36"
-        },
-        {
-            "name": "graphaware/neo4j-common",
-            "version": "3.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/graphaware/neo4j-php-commons.git",
-                "reference": "f31b4ec62e4374895664e9a6691fcba2d712497f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/graphaware/neo4j-php-commons/zipball/f31b4ec62e4374895664e9a6691fcba2d712497f",
-                "reference": "f31b4ec62e4374895664e9a6691fcba2d712497f",
-                "shasum": ""
-            },
-            "require": {
-                "myclabs/php-enum": "^1.4"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "GraphAware\\Common\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "ApacheV2"
-            ],
-            "authors": [
-                {
-                    "name": "Christophe Willemsen",
-                    "email": "christophe@graphaware.com"
-                }
-            ],
-            "description": "Common Utilities library for Neo4j",
-            "keywords": [
-                "cypher",
-                "database",
-                "graph",
-                "neo4j",
-                "statement"
-            ],
-            "time": "2017-02-23 17:02:44"
-        },
-        {
-            "name": "graphaware/neo4j-php-client",
-            "version": "4.8.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/graphaware/neo4j-php-client.git",
-                "reference": "2041c6a1cb046b3193e1656043e50c972970be28"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/graphaware/neo4j-php-client/zipball/2041c6a1cb046b3193e1656043e50c972970be28",
-                "reference": "2041c6a1cb046b3193e1656043e50c972970be28",
-                "shasum": ""
-            },
-            "require": {
-                "ext-bcmath": "*",
-                "ext-mbstring": "*",
-                "graphaware/neo4j-bolt": "^1.5",
-                "graphaware/neo4j-common": "^3.4",
-                "myclabs/php-enum": "^1.4",
-                "php": "^5.6 || ^7.0",
-                "php-http/client-common": "^1.0",
-                "php-http/discovery": "^1.0",
-                "php-http/guzzle6-adapter": "^1.0",
-                "php-http/httplug": "^1.0",
-                "php-http/message": "^1.0",
-                "php-http/message-factory": "^1.0",
-                "symfony/event-dispatcher": "^2.7 || ^3.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.0",
-                "phpunit/phpunit": "^4.0",
-                "symfony/stopwatch": "^3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "GraphAware\\Neo4j\\Client\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Christophe Willemsen",
-                    "email": "christophe@graphaware.com"
-                }
-            ],
-            "description": "Neo4j-PHP-Client is the most advanced PHP Client for Neo4j",
-            "homepage": "http://graphaware.com",
-            "keywords": [
-                "bolt",
-                "client",
-                "cluster",
-                "database",
-                "graph",
-                "high-availability",
-                "http",
-                "neo4j"
-            ],
-            "time": "2017-02-27 01:45:03"
-        },
-        {
-            "name": "guzzlehttp/guzzle",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "2297b43ad7c07a6b70a54c19e3fdd27ddd266d0b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/2297b43ad7c07a6b70a54c19e3fdd27ddd266d0b",
-                "reference": "2297b43ad7c07a6b70a54c19e3fdd27ddd266d0b",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/promises": "^1.0",
-                "guzzlehttp/psr7": "^1.4",
-                "php": ">=5.5"
-            },
-            "require-dev": {
-                "ext-curl": "*",
-                "phpunit/phpunit": "^4.0",
-                "psr/log": "^1.0"
-            },
-            "suggest": {
-                "psr/log": "Required for using the Log middleware"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "6.2-dev"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "src/functions_include.php"
-                ],
-                "psr-4": {
-                    "GuzzleHttp\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Michael Dowling",
-                    "email": "mtdowling@gmail.com",
-                    "homepage": "https://github.com/mtdowling"
-                }
-            ],
-            "description": "Guzzle is a PHP HTTP client library",
-            "homepage": "http://guzzlephp.org/",
-            "keywords": [
-                "client",
-                "curl",
-                "framework",
-                "http",
-                "http client",
-                "rest",
-                "web service"
-            ],
-            "time": "2017-02-28 22:51:22"
-        },
-        {
-            "name": "guzzlehttp/promises",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/guzzle/promises.git",
-                "reference": "a59da6cf61d80060647ff4d3eb2c03a2bc694646"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/a59da6cf61d80060647ff4d3eb2c03a2bc694646",
-                "reference": "a59da6cf61d80060647ff4d3eb2c03a2bc694646",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.5.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.4-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "GuzzleHttp\\Promise\\": "src/"
-                },
-                "files": [
-                    "src/functions_include.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Michael Dowling",
-                    "email": "mtdowling@gmail.com",
-                    "homepage": "https://github.com/mtdowling"
-                }
-            ],
-            "description": "Guzzle promises library",
-            "keywords": [
-                "promise"
-            ],
-            "time": "2016-12-20 10:07:11"
-        },
-        {
-            "name": "guzzlehttp/psr7",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/guzzle/psr7.git",
-                "reference": "0d6c7ca039329247e4f0f8f8f6506810e8248855"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/0d6c7ca039329247e4f0f8f8f6506810e8248855",
-                "reference": "0d6c7ca039329247e4f0f8f8f6506810e8248855",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0",
-                "psr/http-message": "~1.0"
-            },
-            "provide": {
-                "psr/http-message-implementation": "1.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.4-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "GuzzleHttp\\Psr7\\": "src/"
-                },
-                "files": [
-                    "src/functions_include.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Michael Dowling",
-                    "email": "mtdowling@gmail.com",
-                    "homepage": "https://github.com/mtdowling"
-                },
-                {
-                    "name": "Tobias Schultze",
-                    "homepage": "https://github.com/Tobion"
-                }
-            ],
-            "description": "PSR-7 message implementation that also provides common utility methods",
-            "keywords": [
-                "http",
-                "message",
-                "request",
-                "response",
-                "stream",
-                "uri",
-                "url"
-            ],
-            "time": "2017-02-27 10:51:17"
-        },
-        {
-            "name": "myclabs/php-enum",
-            "version": "1.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/myclabs/php-enum.git",
-                "reference": "e42fa9d2ae5dd660dbd0fb573d94c61e5a0dbb02"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/php-enum/zipball/e42fa9d2ae5dd660dbd0fb573d94c61e5a0dbb02",
-                "reference": "e42fa9d2ae5dd660dbd0fb573d94c61e5a0dbb02",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.*",
-                "squizlabs/php_codesniffer": "1.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "MyCLabs\\Enum\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP Enum contributors",
-                    "homepage": "https://github.com/myclabs/php-enum/graphs/contributors"
-                }
-            ],
-            "description": "PHP Enum implementation",
-            "homepage": "http://github.com/myclabs/php-enum",
-            "keywords": [
-                "enum"
-            ],
-            "time": "2016-10-09 21:43:05"
-        },
-        {
-            "name": "php-http/client-common",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-http/client-common.git",
-                "reference": "6027a1d59064c11c614a9aa2b5e3b800add4d878"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-http/client-common/zipball/6027a1d59064c11c614a9aa2b5e3b800add4d878",
-                "reference": "6027a1d59064c11c614a9aa2b5e3b800add4d878",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4",
-                "php-http/httplug": "^1.1",
-                "php-http/message": "^1.2",
-                "php-http/message-factory": "^1.0",
-                "symfony/options-resolver": "^2.6 || ^3.0"
-            },
-            "require-dev": {
-                "henrikbjorn/phpspec-code-coverage": "^1.0",
-                "phpspec/phpspec": "^2.4"
-            },
-            "suggest": {
-                "php-http/cache-plugin": "PSR-6 Cache plugin",
-                "php-http/logger-plugin": "PSR-3 Logger plugin",
-                "php-http/stopwatch-plugin": "Symfony Stopwatch plugin"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.5-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Http\\Client\\Common\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Márk Sági-Kazár",
-                    "email": "mark.sagikazar@gmail.com"
-                }
-            ],
-            "description": "Common HTTP Client implementations and tools for HTTPlug",
-            "homepage": "http://httplug.io",
-            "keywords": [
-                "client",
-                "common",
-                "http",
-                "httplug"
-            ],
-            "time": "2017-02-20 14:20:20"
-        },
-        {
-            "name": "php-http/discovery",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-http/discovery.git",
-                "reference": "6b33475a3239439bc7ced287d0de0bb82e04d2f0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-http/discovery/zipball/6b33475a3239439bc7ced287d0de0bb82e04d2f0",
-                "reference": "6b33475a3239439bc7ced287d0de0bb82e04d2f0",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.5 || ^7.0"
-            },
-            "require-dev": {
-                "henrikbjorn/phpspec-code-coverage": "^2.0.2",
-                "php-http/httplug": "^1.0",
-                "php-http/message-factory": "^1.0",
-                "phpspec/phpspec": "^2.4",
-                "puli/composer-plugin": "1.0.0-beta10"
-            },
-            "suggest": {
-                "php-http/message": "Allow to use Guzzle, Diactoros or Slim Framework factories",
-                "puli/composer-plugin": "Sets up Puli which is recommended for Discovery to work. Check http://docs.php-http.org/en/latest/discovery.html for more details."
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.3-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Http\\Discovery\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Márk Sági-Kazár",
-                    "email": "mark.sagikazar@gmail.com"
-                }
-            ],
-            "description": "Finds installed HTTPlug implementations and PSR-7 message factories",
-            "homepage": "http://php-http.org",
-            "keywords": [
-                "adapter",
-                "client",
-                "discovery",
-                "factory",
-                "http",
-                "message",
-                "psr7"
-            ],
-            "time": "2017-03-02 06:56:00"
-        },
-        {
-            "name": "php-http/guzzle6-adapter",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-http/guzzle6-adapter.git",
-                "reference": "7150e44e4b941d02546f1a07dd9f3c79ce5e2941"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-http/guzzle6-adapter/zipball/7150e44e4b941d02546f1a07dd9f3c79ce5e2941",
-                "reference": "7150e44e4b941d02546f1a07dd9f3c79ce5e2941",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "^6.0",
-                "php": "^5.5 || ^7.0",
-                "php-http/httplug": "^1.0"
-            },
-            "provide": {
-                "php-http/async-client-implementation": "1.0",
-                "php-http/client-implementation": "1.0"
-            },
-            "require-dev": {
-                "ext-curl": "*",
-                "php-http/client-integration-tests": "^0.5.1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.2-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Http\\Adapter\\Guzzle6\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Márk Sági-Kazár",
-                    "email": "mark.sagikazar@gmail.com"
-                },
-                {
-                    "name": "David de Boer",
-                    "email": "david@ddeboer.nl"
-                }
-            ],
-            "description": "Guzzle 6 HTTP Adapter",
-            "homepage": "http://httplug.io",
-            "keywords": [
-                "Guzzle",
-                "http"
-            ],
-            "time": "2017-02-22 15:45:35"
-        },
-        {
-            "name": "php-http/httplug",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-http/httplug.git",
-                "reference": "f32fefee51cb96e99edb0c4bb1d11b5026ad5069"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-http/httplug/zipball/f32fefee51cb96e99edb0c4bb1d11b5026ad5069",
-                "reference": "f32fefee51cb96e99edb0c4bb1d11b5026ad5069",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4",
-                "php-http/promise": "^1.0",
-                "psr/http-message": "^1.0"
-            },
-            "require-dev": {
-                "henrikbjorn/phpspec-code-coverage": "^1.0",
-                "phpspec/phpspec": "^2.4"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.2-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Http\\Client\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Eric GELOEN",
-                    "email": "geloen.eric@gmail.com"
-                },
-                {
-                    "name": "Márk Sági-Kazár",
-                    "email": "mark.sagikazar@gmail.com"
-                }
-            ],
-            "description": "HTTPlug, the HTTP client abstraction for PHP",
-            "homepage": "http://httplug.io",
-            "keywords": [
-                "client",
-                "http"
-            ],
-            "time": "2017-01-02 06:37:42"
-        },
-        {
-            "name": "php-http/message",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-http/message.git",
-                "reference": "13df8c48f40ca7925303aa336f19be4b80984f01"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-http/message/zipball/13df8c48f40ca7925303aa336f19be4b80984f01",
-                "reference": "13df8c48f40ca7925303aa336f19be4b80984f01",
-                "shasum": ""
-            },
-            "require": {
-                "clue/stream-filter": "^1.3",
-                "php": ">=5.4",
-                "php-http/message-factory": "^1.0.2",
-                "psr/http-message": "^1.0"
-            },
-            "require-dev": {
-                "akeneo/phpspec-skip-example-extension": "^1.0",
-                "coduo/phpspec-data-provider-extension": "^1.0",
-                "ext-zlib": "*",
-                "guzzlehttp/psr7": "^1.0",
-                "henrikbjorn/phpspec-code-coverage": "^1.0",
-                "phpspec/phpspec": "^2.4",
-                "slim/slim": "^3.0",
-                "zendframework/zend-diactoros": "^1.0"
-            },
-            "suggest": {
-                "ext-zlib": "Used with compressor/decompressor streams",
-                "guzzlehttp/psr7": "Used with Guzzle PSR-7 Factories",
-                "slim/slim": "Used with Slim Framework PSR-7 implementation",
-                "zendframework/zend-diactoros": "Used with Diactoros Factories"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.6-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Http\\Message\\": "src/"
-                },
-                "files": [
-                    "src/filters.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Márk Sági-Kazár",
-                    "email": "mark.sagikazar@gmail.com"
-                }
-            ],
-            "description": "HTTP Message related tools",
-            "homepage": "http://php-http.org",
-            "keywords": [
-                "http",
-                "message",
-                "psr-7"
-            ],
-            "time": "2017-02-14 08:58:37"
-        },
-        {
-            "name": "php-http/message-factory",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-http/message-factory.git",
-                "reference": "a2809d4fe294ebe8879aec8d4d5bf21faa029344"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-http/message-factory/zipball/a2809d4fe294ebe8879aec8d4d5bf21faa029344",
-                "reference": "a2809d4fe294ebe8879aec8d4d5bf21faa029344",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4",
-                "psr/http-message": "^1.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Http\\Message\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Márk Sági-Kazár",
-                    "email": "mark.sagikazar@gmail.com"
-                }
-            ],
-            "description": "Factory interfaces for PSR-7 HTTP Message",
-            "homepage": "http://php-http.org",
-            "keywords": [
-                "factory",
-                "http",
-                "message",
-                "stream",
-                "uri"
-            ],
-            "time": "2016-02-03 08:16:31"
-        },
-        {
-            "name": "php-http/promise",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-http/promise.git",
-                "reference": "810b30da8bcf69e4b82c4b9bc6b31518234293ab"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-http/promise/zipball/810b30da8bcf69e4b82c4b9bc6b31518234293ab",
-                "reference": "810b30da8bcf69e4b82c4b9bc6b31518234293ab",
-                "shasum": ""
-            },
-            "require-dev": {
-                "henrikbjorn/phpspec-code-coverage": "^1.0",
-                "phpspec/phpspec": "^2.4"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Http\\Promise\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Márk Sági-Kazár",
-                    "email": "mark.sagikazar@gmail.com"
-                },
-                {
-                    "name": "Joel Wurtz",
-                    "email": "joel.wurtz@gmail.com"
-                }
-            ],
-            "description": "Promise used for asynchronous HTTP requests",
-            "homepage": "http://httplug.io",
-            "keywords": [
-                "promise"
-            ],
-            "time": "2016-01-28 07:54:12"
-        },
-        {
-            "name": "psr/http-message",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/http-message.git",
-                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
-                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Psr\\Http\\Message\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP-FIG",
-                    "homepage": "http://www.php-fig.org/"
-                }
-            ],
-            "description": "Common interface for HTTP messages",
-            "homepage": "https://github.com/php-fig/http-message",
-            "keywords": [
-                "http",
-                "http-message",
-                "psr",
-                "psr-7",
-                "request",
-                "response"
-            ],
-            "time": "2016-08-06 14:39:51"
-        },
-        {
-            "name": "symfony/event-dispatcher",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "b366aa1e03bcfd4b8494087ca44f0afab3624c8d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/b366aa1e03bcfd4b8494087ca44f0afab3624c8d",
-                "reference": "b366aa1e03bcfd4b8494087ca44f0afab3624c8d",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.5.9"
-            },
-            "conflict": {
-                "symfony/dependency-injection": "<3.3"
-            },
-            "require-dev": {
-                "psr/log": "~1.0",
-                "symfony/config": "~2.8|~3.0",
-                "symfony/dependency-injection": "~3.3",
-                "symfony/expression-language": "~2.8|~3.0",
-                "symfony/stopwatch": "~2.8|~3.0"
-            },
-            "suggest": {
-                "symfony/dependency-injection": "",
-                "symfony/http-kernel": ""
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.3-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\EventDispatcher\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony EventDispatcher Component",
-            "homepage": "https://symfony.com",
-            "time": "2017-02-28 02:18:26"
-        },
-        {
-            "name": "symfony/options-resolver",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/options-resolver.git",
-                "reference": "559967e87725ee85d8d8f6ff42c03d9275757699"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/559967e87725ee85d8d8f6ff42c03d9275757699",
-                "reference": "559967e87725ee85d8d8f6ff42c03d9275757699",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.5.9"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.3-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\OptionsResolver\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony OptionsResolver Component",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "config",
-                "configuration",
-                "options"
-            ],
-            "time": "2017-02-21 10:07:34"
+  "_readme": [
+    "This file locks the dependencies of your project to a known state",
+    "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+    "This file is @generated automatically"
+  ],
+  "content-hash": "d2d30ccd427e7b4046cdcb6dbedb3fbc",
+  "packages": [
+    {
+      "name": "clue/stream-filter",
+      "version": "1.x-dev",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/clue/stream-filter.git",
+        "reference": "8f64659508b9e97e48d6df5c07a6e174d99c3bc4"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/clue/stream-filter/zipball/8f64659508b9e97e48d6df5c07a6e174d99c3bc4",
+        "reference": "8f64659508b9e97e48d6df5c07a6e174d99c3bc4",
+        "shasum": ""
+      },
+      "require": {
+        "php": ">=5.3"
+      },
+      "require-dev": {
+        "phpunit/phpunit": "^9.3 || ^5.7 || ^4.8.36"
+      },
+      "default-branch": true,
+      "type": "library",
+      "autoload": {
+        "files": [
+          "src/functions_include.php"
+        ],
+        "psr-4": {
+          "Clue\\StreamFilter\\": "src/"
         }
-    ],
-    "packages-dev": [],
-    "aliases": [],
-    "minimum-stability": "dev",
-    "stability-flags": [],
-    "prefer-stable": false,
-    "prefer-lowest": false,
-    "platform": [],
-    "platform-dev": []
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "MIT"
+      ],
+      "authors": [
+        {
+          "name": "Christian Lück",
+          "email": "christian@clue.engineering"
+        }
+      ],
+      "description": "A simple and modern approach to stream filtering in PHP",
+      "homepage": "https://github.com/clue/php-stream-filter",
+      "keywords": [
+        "bucket brigade",
+        "callback",
+        "filter",
+        "php_user_filter",
+        "stream",
+        "stream_filter_append",
+        "stream_filter_register"
+      ],
+      "support": {
+        "issues": "https://github.com/clue/stream-filter/issues",
+        "source": "https://github.com/clue/stream-filter/tree/1.x"
+      },
+      "funding": [
+        {
+          "url": "https://clue.engineering/support",
+          "type": "custom"
+        },
+        {
+          "url": "https://github.com/clue",
+          "type": "github"
+        }
+      ],
+      "time": "2022-06-01T13:38:52+00:00"
+    },
+    {
+      "name": "laudis/neo4j-php-client",
+      "version": "2.6.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/neo4j-php/neo4j-php-client.git",
+        "reference": "6a5226cbcd43f0ede4df1e573d9b1a4820214aca"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/neo4j-php/neo4j-php-client/zipball/6a5226cbcd43f0ede4df1e573d9b1a4820214aca",
+        "reference": "6a5226cbcd43f0ede4df1e573d9b1a4820214aca",
+        "shasum": ""
+      },
+      "require": {
+        "ext-json": "*",
+        "laudis/typed-enum": "^1.3.2",
+        "php": "^7.4 || ^8.0",
+        "php-http/discovery": "^1.13",
+        "php-http/message": "^1.0",
+        "php-http/message-factory": "^1.0",
+        "psr/http-client": "^1.0",
+        "psr/http-factory": "^1.0",
+        "psr/http-message": "^1.0",
+        "stefanak-michal/bolt": "^3.1.2",
+        "symfony/polyfill-php80": "^1.2"
+      },
+      "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.5",
+        "kriswallsmith/buzz": "^1.2",
+        "lctrs/psalm-psr-container-plugin": "^1.3",
+        "monolog/monolog": "^2.2",
+        "nyholm/psr7": "^1.3",
+        "nyholm/psr7-server": "^1.0",
+        "php-di/php-di": "^6.3",
+        "phpunit/phpunit": "^9.0",
+        "psalm/plugin-phpunit": "^0.15.1",
+        "psr/container": "^1.1",
+        "psr/log": "^1.1",
+        "symfony/uid": "^5.0",
+        "symfony/var-dumper": "^5.0",
+        "vimeo/psalm": "^4.20",
+        "vlucas/phpdotenv": "^5.0"
+      },
+      "suggest": {
+        "composer-runtime-api": "Install composer 2 for auto detection of version in user agent",
+        "ext-bcmath": "Needed to implement bolt protocol"
+      },
+      "type": "library",
+      "autoload": {
+        "psr-4": {
+          "Laudis\\Neo4j\\": "src/"
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "MIT"
+      ],
+      "authors": [
+        {
+          "name": "Ghlen Nagels",
+          "email": "ghlen@pm.me"
+        }
+      ],
+      "description": "Neo4j-PHP-Client is the most advanced PHP Client for Neo4j",
+      "keywords": [
+        "bolt",
+        "client",
+        "cluster",
+        "database",
+        "graph",
+        "high-availability",
+        "http",
+        "neo4j"
+      ],
+      "support": {
+        "issues": "https://github.com/neo4j-php/neo4j-php-client/issues",
+        "source": "https://github.com/neo4j-php/neo4j-php-client/tree/2.6.1"
+      },
+      "time": "2022-04-09T16:47:14+00:00"
+    },
+    {
+      "name": "laudis/typed-enum",
+      "version": "1.3.2",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/transistive/typed-enum.git",
+        "reference": "65cddd2ed0eedd1ff642d1ef632745ab2522c976"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/transistive/typed-enum/zipball/65cddd2ed0eedd1ff642d1ef632745ab2522c976",
+        "reference": "65cddd2ed0eedd1ff642d1ef632745ab2522c976",
+        "shasum": ""
+      },
+      "require": {
+        "php": "^7.4 || ^8.0"
+      },
+      "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.3",
+        "phpunit/phpunit": "9.*",
+        "psalm/plugin-phpunit": "^0.16",
+        "vimeo/psalm": "^4.12"
+      },
+      "type": "library",
+      "autoload": {
+        "psr-4": {
+          "Laudis\\TypedEnum\\": "src/"
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "MIT"
+      ],
+      "authors": [
+        {
+          "name": "Ghlen Nagels",
+          "email": "ghlen@pm.me"
+        }
+      ],
+      "description": "A small class allowing for typed enumerations.",
+      "support": {
+        "issues": "https://github.com/transistive/typed-enum/issues",
+        "source": "https://github.com/transistive/typed-enum/tree/1.3.2"
+      },
+      "time": "2022-01-04T23:33:30+00:00"
+    },
+    {
+      "name": "php-http/discovery",
+      "version": "1.14.2",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/php-http/discovery.git",
+        "reference": "c8d48852fbc052454af42f6de27635ddd916b959"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/php-http/discovery/zipball/c8d48852fbc052454af42f6de27635ddd916b959",
+        "reference": "c8d48852fbc052454af42f6de27635ddd916b959",
+        "shasum": ""
+      },
+      "require": {
+        "php": "^7.1 || ^8.0"
+      },
+      "conflict": {
+        "nyholm/psr7": "<1.0"
+      },
+      "require-dev": {
+        "graham-campbell/phpspec-skip-example-extension": "^5.0",
+        "php-http/httplug": "^1.0 || ^2.0",
+        "php-http/message-factory": "^1.0",
+        "phpspec/phpspec": "^5.1 || ^6.1"
+      },
+      "suggest": {
+        "php-http/message": "Allow to use Guzzle, Diactoros or Slim Framework factories"
+      },
+      "type": "library",
+      "extra": {
+        "branch-alias": {
+          "dev-master": "1.9-dev"
+        }
+      },
+      "autoload": {
+        "psr-4": {
+          "Http\\Discovery\\": "src/"
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "MIT"
+      ],
+      "authors": [
+        {
+          "name": "Márk Sági-Kazár",
+          "email": "mark.sagikazar@gmail.com"
+        }
+      ],
+      "description": "Finds installed HTTPlug implementations and PSR-7 message factories",
+      "homepage": "http://php-http.org",
+      "keywords": [
+        "adapter",
+        "client",
+        "discovery",
+        "factory",
+        "http",
+        "message",
+        "psr7"
+      ],
+      "support": {
+        "issues": "https://github.com/php-http/discovery/issues",
+        "source": "https://github.com/php-http/discovery/tree/1.14.2"
+      },
+      "time": "2022-05-25T07:26:05+00:00"
+    },
+    {
+      "name": "php-http/message",
+      "version": "1.13.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/php-http/message.git",
+        "reference": "7886e647a30a966a1a8d1dad1845b71ca8678361"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/php-http/message/zipball/7886e647a30a966a1a8d1dad1845b71ca8678361",
+        "reference": "7886e647a30a966a1a8d1dad1845b71ca8678361",
+        "shasum": ""
+      },
+      "require": {
+        "clue/stream-filter": "^1.5",
+        "php": "^7.1 || ^8.0",
+        "php-http/message-factory": "^1.0.2",
+        "psr/http-message": "^1.0"
+      },
+      "provide": {
+        "php-http/message-factory-implementation": "1.0"
+      },
+      "require-dev": {
+        "ergebnis/composer-normalize": "^2.6",
+        "ext-zlib": "*",
+        "guzzlehttp/psr7": "^1.0",
+        "laminas/laminas-diactoros": "^2.0",
+        "phpspec/phpspec": "^5.1 || ^6.3 || ^7.1",
+        "slim/slim": "^3.0"
+      },
+      "suggest": {
+        "ext-zlib": "Used with compressor/decompressor streams",
+        "guzzlehttp/psr7": "Used with Guzzle PSR-7 Factories",
+        "laminas/laminas-diactoros": "Used with Diactoros Factories",
+        "slim/slim": "Used with Slim Framework PSR-7 implementation"
+      },
+      "type": "library",
+      "extra": {
+        "branch-alias": {
+          "dev-master": "1.10-dev"
+        }
+      },
+      "autoload": {
+        "files": [
+          "src/filters.php"
+        ],
+        "psr-4": {
+          "Http\\Message\\": "src/"
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "MIT"
+      ],
+      "authors": [
+        {
+          "name": "Márk Sági-Kazár",
+          "email": "mark.sagikazar@gmail.com"
+        }
+      ],
+      "description": "HTTP Message related tools",
+      "homepage": "http://php-http.org",
+      "keywords": [
+        "http",
+        "message",
+        "psr-7"
+      ],
+      "support": {
+        "issues": "https://github.com/php-http/message/issues",
+        "source": "https://github.com/php-http/message/tree/1.13.0"
+      },
+      "time": "2022-02-11T13:41:14+00:00"
+    },
+    {
+      "name": "php-http/message-factory",
+      "version": "dev-master",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/php-http/message-factory.git",
+        "reference": "597f30e6dfd32a85fd7dbe58cb47554b5bad910e"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/php-http/message-factory/zipball/597f30e6dfd32a85fd7dbe58cb47554b5bad910e",
+        "reference": "597f30e6dfd32a85fd7dbe58cb47554b5bad910e",
+        "shasum": ""
+      },
+      "require": {
+        "php": ">=5.4",
+        "psr/http-message": "^1.0"
+      },
+      "default-branch": true,
+      "type": "library",
+      "extra": {
+        "branch-alias": {
+          "dev-master": "1.0-dev"
+        }
+      },
+      "autoload": {
+        "psr-4": {
+          "Http\\Message\\": "src/"
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "MIT"
+      ],
+      "authors": [
+        {
+          "name": "Márk Sági-Kazár",
+          "email": "mark.sagikazar@gmail.com"
+        }
+      ],
+      "description": "Factory interfaces for PSR-7 HTTP Message",
+      "homepage": "http://php-http.org",
+      "keywords": [
+        "factory",
+        "http",
+        "message",
+        "stream",
+        "uri"
+      ],
+      "support": {
+        "issues": "https://github.com/php-http/message-factory/issues",
+        "source": "https://github.com/php-http/message-factory/tree/master"
+      },
+      "time": "2018-12-06T18:41:41+00:00"
+    },
+    {
+      "name": "psr/http-client",
+      "version": "dev-master",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/php-fig/http-client.git",
+        "reference": "22b2ef5687f43679481615605d7a15c557ce85b1"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/php-fig/http-client/zipball/22b2ef5687f43679481615605d7a15c557ce85b1",
+        "reference": "22b2ef5687f43679481615605d7a15c557ce85b1",
+        "shasum": ""
+      },
+      "require": {
+        "php": "^7.0 || ^8.0",
+        "psr/http-message": "^1.0"
+      },
+      "default-branch": true,
+      "type": "library",
+      "extra": {
+        "branch-alias": {
+          "dev-master": "1.0.x-dev"
+        }
+      },
+      "autoload": {
+        "psr-4": {
+          "Psr\\Http\\Client\\": "src/"
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "MIT"
+      ],
+      "authors": [
+        {
+          "name": "PHP-FIG",
+          "homepage": "https://www.php-fig.org/"
+        }
+      ],
+      "description": "Common interface for HTTP clients",
+      "homepage": "https://github.com/php-fig/http-client",
+      "keywords": [
+        "http",
+        "http-client",
+        "psr",
+        "psr-18"
+      ],
+      "support": {
+        "source": "https://github.com/php-fig/http-client/tree/master"
+      },
+      "time": "2020-09-19T09:12:31+00:00"
+    },
+    {
+      "name": "psr/http-factory",
+      "version": "dev-master",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/php-fig/http-factory.git",
+        "reference": "36fa03d50ff82abcae81860bdaf4ed9a1510c7cd"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/php-fig/http-factory/zipball/36fa03d50ff82abcae81860bdaf4ed9a1510c7cd",
+        "reference": "36fa03d50ff82abcae81860bdaf4ed9a1510c7cd",
+        "shasum": ""
+      },
+      "require": {
+        "php": ">=7.0.0",
+        "psr/http-message": "^1.0"
+      },
+      "default-branch": true,
+      "type": "library",
+      "extra": {
+        "branch-alias": {
+          "dev-master": "1.0.x-dev"
+        }
+      },
+      "autoload": {
+        "psr-4": {
+          "Psr\\Http\\Message\\": "src/"
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "MIT"
+      ],
+      "authors": [
+        {
+          "name": "PHP-FIG",
+          "homepage": "https://www.php-fig.org/"
+        }
+      ],
+      "description": "Common interfaces for PSR-7 HTTP message factories",
+      "keywords": [
+        "factory",
+        "http",
+        "message",
+        "psr",
+        "psr-17",
+        "psr-7",
+        "request",
+        "response"
+      ],
+      "support": {
+        "source": "https://github.com/php-fig/http-factory/tree/master"
+      },
+      "time": "2020-09-17T16:52:55+00:00"
+    },
+    {
+      "name": "psr/http-message",
+      "version": "dev-master",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/php-fig/http-message.git",
+        "reference": "efd67d1dc14a7ef4fc4e518e7dee91c271d524e4"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/php-fig/http-message/zipball/efd67d1dc14a7ef4fc4e518e7dee91c271d524e4",
+        "reference": "efd67d1dc14a7ef4fc4e518e7dee91c271d524e4",
+        "shasum": ""
+      },
+      "require": {
+        "php": ">=5.3.0"
+      },
+      "default-branch": true,
+      "type": "library",
+      "extra": {
+        "branch-alias": {
+          "dev-master": "1.0.x-dev"
+        }
+      },
+      "autoload": {
+        "psr-4": {
+          "Psr\\Http\\Message\\": "src/"
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "MIT"
+      ],
+      "authors": [
+        {
+          "name": "PHP-FIG",
+          "homepage": "http://www.php-fig.org/"
+        }
+      ],
+      "description": "Common interface for HTTP messages",
+      "homepage": "https://github.com/php-fig/http-message",
+      "keywords": [
+        "http",
+        "http-message",
+        "psr",
+        "psr-7",
+        "request",
+        "response"
+      ],
+      "support": {
+        "source": "https://github.com/php-fig/http-message/tree/master"
+      },
+      "time": "2019-08-29T13:16:46+00:00"
+    },
+    {
+      "name": "stefanak-michal/bolt",
+      "version": "v3.1.2",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/neo4j-php/Bolt.git",
+        "reference": "350a15cb8eeded9b908380cdee5fa10285470a10"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/neo4j-php/Bolt/zipball/350a15cb8eeded9b908380cdee5fa10285470a10",
+        "reference": "350a15cb8eeded9b908380cdee5fa10285470a10",
+        "shasum": ""
+      },
+      "require": {
+        "ext-mbstring": "*",
+        "php": ">=7.1.0"
+      },
+      "require-dev": {
+        "phpunit/phpunit": ">=7.5.0"
+      },
+      "suggest": {
+        "ext-openssl": "Needed when using StreamSocket connection class with SSL",
+        "ext-sockets": "Needed when using the Bolt\\connection\\Socket",
+        "laudis/neo4j-php-client": "Neo4j-PHP-Client is the most advanced PHP Client for Neo4j"
+      },
+      "type": "library",
+      "autoload": {
+        "psr-4": {
+          "Bolt\\": "src/"
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "MIT"
+      ],
+      "authors": [
+        {
+          "name": "Michal Stefanak",
+          "homepage": "https://www.linkedin.com/in/michalstefanak/",
+          "role": "Developer"
+        }
+      ],
+      "description": "Bolt protocol library over TCP socket",
+      "homepage": "https://github.com/neo4j-php/Bolt",
+      "keywords": [
+        "Socket",
+        "bolt",
+        "database",
+        "neo4j"
+      ],
+      "support": {
+        "issues": "https://github.com/neo4j-php/Bolt/issues",
+        "source": "https://github.com/neo4j-php/Bolt"
+      },
+      "funding": [
+        {
+          "url": "https://ko-fi.com/michalstefanak",
+          "type": "ko-fi"
+        }
+      ],
+      "time": "2022-03-02T15:38:53+00:00"
+    },
+    {
+      "name": "symfony/polyfill-php80",
+      "version": "dev-main",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/symfony/polyfill-php80.git",
+        "reference": "cfa0ae98841b9e461207c13ab093d76b0fa7bace"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/cfa0ae98841b9e461207c13ab093d76b0fa7bace",
+        "reference": "cfa0ae98841b9e461207c13ab093d76b0fa7bace",
+        "shasum": ""
+      },
+      "require": {
+        "php": ">=7.1"
+      },
+      "default-branch": true,
+      "type": "library",
+      "extra": {
+        "branch-alias": {
+          "dev-main": "1.26-dev"
+        },
+        "thanks": {
+          "name": "symfony/polyfill",
+          "url": "https://github.com/symfony/polyfill"
+        }
+      },
+      "autoload": {
+        "files": [
+          "bootstrap.php"
+        ],
+        "psr-4": {
+          "Symfony\\Polyfill\\Php80\\": ""
+        },
+        "classmap": [
+          "Resources/stubs"
+        ]
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "MIT"
+      ],
+      "authors": [
+        {
+          "name": "Ion Bazan",
+          "email": "ion.bazan@gmail.com"
+        },
+        {
+          "name": "Nicolas Grekas",
+          "email": "p@tchwork.com"
+        },
+        {
+          "name": "Symfony Community",
+          "homepage": "https://symfony.com/contributors"
+        }
+      ],
+      "description": "Symfony polyfill backporting some PHP 8.0+ features to lower PHP versions",
+      "homepage": "https://symfony.com",
+      "keywords": [
+        "compatibility",
+        "polyfill",
+        "portable",
+        "shim"
+      ],
+      "support": {
+        "source": "https://github.com/symfony/polyfill-php80/tree/v1.26.0"
+      },
+      "funding": [
+        {
+          "url": "https://symfony.com/sponsor",
+          "type": "custom"
+        },
+        {
+          "url": "https://github.com/fabpot",
+          "type": "github"
+        },
+        {
+          "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+          "type": "tidelift"
+        }
+      ],
+      "time": "2022-05-10T07:21:04+00:00"
+    }
+  ],
+  "packages-dev": [],
+  "aliases": [],
+  "minimum-stability": "dev",
+  "stability-flags": [],
+  "prefer-stable": false,
+  "prefer-lowest": false,
+  "platform": [],
+  "platform-dev": [],
+  "plugin-api-version": "2.3.0"
 }

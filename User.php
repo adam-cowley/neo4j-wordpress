@@ -2,22 +2,19 @@
 
 namespace Neopress;
 
-use GraphAware\Neo4j\Client\Transaction\Transaction;
+use Laudis\Neo4j\Basic\UnmanagedTransaction as Transaction;
 
 class User {
 
-    /**
-     * Create a Cypher Query for a Category
-     *
-     * @param  Int $post_id
-     * @return void
-     */
-    public static function merge(Transaction $tx, $user_id) {
-        $cypher = sprintf('
-            MERGE (u:User {user_id: {user_id}})
-        ');
+	/**
+	 * Create a Cypher Query for a Category
+	 */
+	public static function merge( Transaction $tx, int $user_id ): void {
+		$cypher = <<<'CYPHER'
+            MERGE (u:User {user_id: $userId})
+            CYPHER;
 
-        $tx->push($cypher, ['user_id' => $user_id]);
-    }
+		$tx->run( $cypher, [ 'userId' => $user_id ] );
+	}
 
 }

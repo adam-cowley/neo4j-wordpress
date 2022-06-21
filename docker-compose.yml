@@ -1,0 +1,60 @@
+version: '3.1'
+
+networks:
+  wordpress:
+
+services:
+  wordpress:
+    image: wordpress
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: exampleuser
+      WORDPRESS_DB_PASSWORD: examplepass
+      WORDPRESS_DB_NAME: exampledb
+    volumes:
+      - wordpress:/var/www/html
+      - ./:/var/www/html/wp-content/plugins
+    networks:
+      - wordpress
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: exampledb
+      MYSQL_USER: exampleuser
+      MYSQL_PASSWORD: examplepass
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - wordpress
+
+  neo4j:
+    networks:
+      - wordpress
+    image: neo4j:4.4-enterprise
+    healthcheck:
+      test: "wget -q --method=HEAD http://localhost:7474 || exit 1"
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    ports:
+      - "7687:7687"
+      - "7474:7474"
+    environment:
+      NEO4J_AUTH: neo4j/test
+      NEO4J_ACCEPT_LICENSE_AGREEMENT: "yes"
+      NEO4JLABS_PLUGINS: '["apoc"]'
+      NEO4J_dbms_security_allow__csv__import__from__file__urls: "true"
+    volumes:
+      - neo4j:/data
+
+
+volumes:
+  wordpress:
+  neo4j:
+  db:
